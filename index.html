@@ -3,63 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">كوبون الخدمات المجاني</title>
+    <title id="pageTitle">كوبون النهدي</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div class="top-spacer"></div>
+<div class="main-wrapper">
+    <div class="lang-switch-container">
+        <button id="toggleLang">En</button>
+    </div>
 
-<div class="lang-switch-container">
-    <button id="toggleLang">En</button>
+    <div class="container">
+        <h1 id="title">كوبون النهدي</h1>
+        <p id="description">استمتع بـ 4 خدمات عند شرائك 4 إطارات!</p>
+
+        <form id="registrationForm">
+            <label id="labelName">الاسم:</label>
+            <input type="text" name="name" id="nameInput" placeholder="اكتب اسمك" required pattern="^[a-zA-Z\s\u0600-\u06FF]+$">
+
+            <label id="labelCar">نوع السيارة:</label>
+            <input type="text" name="carType" id="carTypeInput" placeholder="مثال: تويوتا كامري" required>
+
+            <label id="labelModel">موديل السيارة (السنة):</label>
+            <input type="number" name="carModel" id="carModelInput" placeholder="2024" required>
+
+            <label id="labelMobile">رقم الجوال:</label>
+            <input type="tel" name="mobileNumber" id="mobileInput" placeholder="0550000000" required pattern="[0-9]{10}">
+
+            <label id="labelCity">المدينة:</label>
+            <select name="city" id="citySelect" required>
+                <option value="" id="cityDefault">اختر المدينة</option>
+                <option value="الرياض" id="city1">الرياض</option>
+                <option value="الدمام" id="city2">الدمام</option>
+                <option value="خميس مشيط" id="city3">خميس مشيط</option>
+                <option value="وادي الدواسر" id="city4">وادي الدواسر</option>
+                <option value="عرعر" id="city5">عرعر</option>
+            </select>
+
+            <label id="labelService">الخدمة المطلوبة:</label>
+            <select name="service" id="serviceSelect" required>
+                <option value="" id="serviceDefault">اختر الخدمة</option>
+                <option value="الكل" id="optAll">الكل (جميع الخدمات)</option>
+                <option value="تدوير" id="optRotate">تدوير</option>
+                <option value="فحص إطارات" id="optCheckTires">فحص إطارات</option>
+                <option value="فحص بطارية" id="optCheckBattery">فحص بطارية</option>
+                <option value="فحص ميزان" id="optCheckBalance">فحص ميزان</option>
+            </select>
+
+            <p id="noteText" class="note-orange">ملحوظة: يرجى إحضار الفاتورة عند الحضور</p>
+            <p id="thanksText" class="thanks-msg">شكراً على ثقتكم بفروع النهدي</p>
+
+            <button type="submit" id="submitBtn">تقديم</button>
+        </form>
+    </div>
+
+    <div class="footer-note" id="footerCompany">شركة ياسر يسلم النهدي التجارية</div>
 </div>
-
-<div class="container">
-    <h1 id="title">كوبون الخدمات المجاني</h1>
-    <h2 id="subtitle">النهدي للإطارات تتعدد الخيارات</h2>
-    <p id="description">استمتع بـ 4 خدمات عند شرائك 4 إطارات!</p>
-
-    <form id="registrationForm">
-        <label id="labelName">الاسم:</label>
-        <input type="text" name="name" id="nameInput" placeholder="اكتب اسمك (حروف فقط)" required pattern="^[a-zA-Z\s\u0600-\u06FF]+$">
-
-        <label id="labelCar">نوع السيارة:</label>
-        <input type="text" name="carType" id="carTypeInput" placeholder="مثال: تويوتا كامري" required>
-
-        <label id="labelModel">موديل السيارة (السنة):</label>
-        <input type="number" name="carModel" id="carModelInput" placeholder="مثال: 2024" required>
-
-        <label id="labelMobile">رقم الجوال:</label>
-        <input type="tel" name="mobileNumber" id="mobileInput" placeholder="0550000000" required pattern="[0-9]{10}" inputmode="numeric">
-
-        <label id="labelCity">المدينة:</label>
-        <select name="city" id="citySelect" required>
-            <option value="" id="cityDefault">اختر المدينة</option>
-            <option value="الرياض">الرياض</option>
-            <option value="الدمام">الدمام</option>
-            <option value="خميس مشيط">خميس مشيط</option>
-            <option value="وادي الدواسر">وادي الدواسر</option>
-            <option value="عرعر">عرعر</option>
-        </select>
-
-        <label id="labelService">الخدمة المطلوبة:</label>
-        <select name="service" id="serviceSelect" required>
-            <option value="" id="serviceDefault">اختر الخدمة</option>
-            <option value="الكل" id="optAll">الكل (جميع الخدمات)</option>
-            <option value="تدوير" id="optRotate">تدوير</option>
-            <option value="فحص إطارات" id="optCheckTires">فحص إطارات</option>
-            <option value="فحص بطارية" id="optCheckBattery">فحص بطارية</option>
-            <option value="فحص ميزان" id="optCheckBalance">فحص ميزان</option>
-        </select>
-
-        <p id="noteText" class="note-orange">ملحوظة: يرجى إحضار الفاتورة عند الحضور</p>
-        <p id="thanksText" class="thanks-msg">شكراً على ثقتكم بفروع النهدي</p>
-
-        <button type="submit" id="submitBtn">تقديم</button>
-    </form>
-</div>
-
-<div class="footer-note" id="footerCompany">شركة ياسر يسلم النهدي التجارية</div>
 
 <script src="script.js"></script>
 </body>
