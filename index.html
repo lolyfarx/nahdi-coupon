@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>كوبون النهدي للاطارات</title>
+    <title id="pageTitle">كوبون النهدي للاطارات</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -47,11 +47,11 @@
         <label id="labelService">الخدمة المطلوبة:</label>
         <select name="service" id="serviceSelect" required>
             <option value="" id="serviceDefault">اختر الخدمة</option>
-            <option value="الكل">الكل (جميع الخدمات)</option>
-            <option value="تدوير">تدوير</option>
-            <option value="فحص إطارات">فحص إطارات</option>
-            <option value="فحص بطارية">فحص بطارية</option>
-            <option value="فحص ميزان">فحص ميزان</option>
+            <option value="الكل" id="optAll">الكل (جميع الخدمات)</option>
+            <option value="تدوير" id="optRotate">تدوير</option>
+            <option value="فحص إطارات" id="optCheckTires">فحص إطارات</option>
+            <option value="فحص بطارية" id="optCheckBattery">فحص بطارية</option>
+            <option value="فحص ميزان" id="optCheckBalance">فحص ميزان</option>
         </select>
 
         <p id="noteText" class="note-orange">ملحوظة: يرجى إحضار الفاتورة عند الحضور</p>
@@ -59,8 +59,13 @@
 
         <button type="submit" id="submitBtn">تقديم</button>
     </form>
-    <div class="footer-note">شركة ياسر يسلم النهدي التجارية</div>
 </div>
+
+<div class="footer-image-container">
+   <img src="footer-design.png" alt="تذييل النهدي" class="footer-banner">
+</div>
+
+<div class="footer-note" id="footerCompany">شركة ياسر يسلم النهدي التجارية</div>
 
 <script src="script.js"></script>
 </body>

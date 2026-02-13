@@ -2,6 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
     width: 100%;
+    overflow-x: hidden;
 }
 
 body {
@@ -14,13 +15,13 @@ body {
     align-items: center;
 }
 
-/* تموضع زر اللغة */
+/* زر اللغة البرتقالي */
 .lang-switch {
-    width: calc(100% - 76px); /* 1 سم من كل جانب */
+    width: calc(100% - 76px);
     max-width: 360px;
     display: flex;
     justify-content: flex-end;
-    margin: 20px 0 10px 0; /* مسافة من الأعلى */
+    margin: 15px 0 5px 0;
 }
 
 .lang-switch button {
@@ -33,28 +34,29 @@ body {
     cursor: pointer;
 }
 
-/* تموضع الهيدر */
-.header-image-container {
+/* الهيدر والفوتير */
+.header-image-container, .footer-image-container {
     width: calc(100% - 76px);
     max-width: 360px;
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
-.header-banner {
+.header-banner, .footer-banner {
     width: 100%;
     border-radius: 12px;
+    display: block;
 }
 
-/* تموضع المربع الرئيسي 1 سم من الجوانب ومنضبط من الأعلى */
+/* المربع الرئيسي */
 .container {
     background-color: rgba(255, 255, 255, 0.96);
     padding: 25px;
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     text-align: center;
-    width: calc(100% - 76px); /* يضمن 1 سم من اليمين و1 سم من اليسار */
+    width: calc(100% - 76px); /* 1 سم من كل جانب */
     max-width: 360px;
-    margin: 0 38px 30px 38px; /* 38px تعادل 1 سم */
+    margin: 0 38px;
     box-sizing: border-box;
 }
 
@@ -71,7 +73,6 @@ form input, form select {
     border-radius: 8px;
     border: 1px solid #ddd;
     box-sizing: border-box;
-    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
 }
 
 .note-orange { color: #ff6600; font-size: 13px; font-weight: bold; margin-top: 15px; }
@@ -87,4 +88,13 @@ form button {
     font-weight: bold;
     margin-top: 10px;
     cursor: pointer;
+}
+
+/* جملة الحقوق في نهاية الصفحة تماماً */
+.footer-note {
+    font-size: 11px;
+    color: #fff; /* جعل اللون أبيض ليظهر فوق الخلفية المظلمة */
+    padding: 20px 0;
+    text-align: center;
+    width: 100%;
 }
