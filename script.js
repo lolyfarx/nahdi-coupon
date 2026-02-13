@@ -10,39 +10,25 @@ document.getElementById('toggleLang').addEventListener('click', function() {
 });
 
 function updateLanguage() {
-    // العناوين
-    document.getElementById('title').innerText = isArabic ? 'كوبون النهدي' : 'ALNAHDI COUPON';
+    document.getElementById('title').innerText = isArabic ? 'كوبون الخدمة المجاني' : 'FREE SERVICE COUPON';
     document.getElementById('description').innerText = isArabic ? 'استمتع بـ 4 خدمات عند شرائك 4 إطارات!' : 'Enjoy 4 services when buying 4 tires!';
     
-    // البيانات
+    // التسميات والمدن والخدمات (نفس الكود السابق مع التأكد من مطابقة الـ IDs)
     document.getElementById('labelName').innerText = isArabic ? 'الاسم:' : 'Name:';
     document.getElementById('labelCar').innerText = isArabic ? 'نوع السيارة:' : 'Car Type:';
     document.getElementById('labelModel').innerText = isArabic ? 'موديل السيارة (السنة):' : 'Car Model (Year):';
     document.getElementById('labelMobile').innerText = isArabic ? 'رقم الجوال:' : 'Mobile Number:';
     document.getElementById('labelCity').innerText = isArabic ? 'المدينة:' : 'City:';
-    document.getElementById('labelService').innerText = isArabic ? 'الخدمة المطلوبة:' : 'Requested Service:';
+    document.getElementById('labelService').innerText = isArabic ? 'الخدمة المطلوبة:' : 'Service:';
 
-    // ترجمة المدن
-    document.getElementById('cityDefault').innerText = isArabic ? 'اختر المدينة' : 'Select City';
     document.getElementById('city1').innerText = isArabic ? 'الرياض' : 'Riyadh';
     document.getElementById('city2').innerText = isArabic ? 'الدمام' : 'Dammam';
     document.getElementById('city3').innerText = isArabic ? 'خميس مشيط' : 'Khamis Mushait';
     document.getElementById('city4').innerText = isArabic ? 'وادي الدواسر' : 'Wadi Ad-Dawasir';
     document.getElementById('city5').innerText = isArabic ? 'عرعر' : 'Arar';
 
-    // الخدمات
-    document.getElementById('serviceDefault').innerText = isArabic ? 'اختر الخدمة' : 'Select Service';
-    document.getElementById('optAll').innerText = isArabic ? 'الكل (جميع الخدمات)' : 'All (All Services)';
-    document.getElementById('optRotate').innerText = isArabic ? 'تدوير' : 'Rotation';
-    document.getElementById('optCheckTires').innerText = isArabic ? 'فحص إطارات' : 'Tire Check';
-    document.getElementById('optCheckBattery').innerText = isArabic ? 'فحص بطارية' : 'Battery Check';
-    document.getElementById('optCheckBalance').innerText = isArabic ? 'فحص ميزان' : 'Alignment Check';
-
-    document.getElementById('noteText').innerText = isArabic ? 'ملحوظة: يرجى إحضار الفاتورة عند الحضور' : 'Note: Please bring the invoice upon arrival';
-    document.getElementById('thanksText').innerText = isArabic ? 'شكراً على ثقتكم بفروع النهدي' : 'Thank you for your trust in Alnahdi';
-    document.getElementById('footerCompany').innerText = isArabic ? 'شركة ياسر يسلم النهدي التجارية' : 'Yasser Yaslam Alnahdi Trading Co.';
-    
     document.getElementById('submitBtn').innerText = isArabic ? 'تقديم' : 'Submit';
+    document.getElementById('footerCompany').innerText = isArabic ? 'شركة ياسر يسلم النهدي التجارية' : 'Yasser Yaslam Alnahdi Trading Co.';
 }
 
 form.addEventListener('submit', e => {
@@ -53,14 +39,13 @@ form.addEventListener('submit', e => {
 
     fetch(scriptURL, { method: 'POST', body: new FormData(form)})
     .then(response => {
-        alert(isArabic ? 'شكراً لك! تم استلام بياناتك.' : 'Thank you! Data received.');
+        alert(isArabic ? 'تم استلام بياناتك بنجاح!' : 'Data received successfully!');
         form.reset();
         submitBtn.disabled = false;
         submitBtn.innerText = isArabic ? 'تقديم' : 'Submit';
     })
     .catch(error => {
-        alert(isArabic ? 'خطأ في الإرسال' : 'Submission Error');
+        alert('Error!');
         submitBtn.disabled = false;
-        submitBtn.innerText = isArabic ? 'تقديم' : 'Submit';
     });
 });

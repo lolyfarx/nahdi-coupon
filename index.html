@@ -3,30 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">كوبون النهدي</title>
+    <title id="pageTitle">كوبون الخدمة المجاني</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Cairo:wght@700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="main-wrapper">
+    <div class="header-spacer"></div>
+
     <div class="lang-switch-container">
         <button id="toggleLang">En</button>
     </div>
 
     <div class="container">
-        <h1 id="title">كوبون النهدي</h1>
+        <h1 id="title">كوبون الخدمة المجاني</h1>
         <p id="description">استمتع بـ 4 خدمات عند شرائك 4 إطارات!</p>
 
         <form id="registrationForm">
             <label id="labelName">الاسم:</label>
-            <input type="text" name="name" id="nameInput" placeholder="اكتب اسمك" required pattern="^[a-zA-Z\s\u0600-\u06FF]+$">
+            <input type="text" name="name" id="nameInput" placeholder="اكتب اسمك" required>
 
             <label id="labelCar">نوع السيارة:</label>
             <input type="text" name="carType" id="carTypeInput" placeholder="مثال: تويوتا كامري" required>
 
             <label id="labelModel">موديل السيارة (السنة):</label>
-            <input type="number" name="carModel" id="carModelInput" placeholder="2024" required>
+            <input type="number" name="carModel" id="carModelInput" placeholder="2026" required>
 
             <label id="labelMobile">رقم الجوال:</label>
             <input type="tel" name="mobileNumber" id="mobileInput" placeholder="0550000000" required pattern="[0-9]{10}">
