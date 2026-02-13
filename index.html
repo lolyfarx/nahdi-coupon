@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>كوبون Alnahdi</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- أيقونة اللغة في الأعلى -->
+<div class="lang-switch">
+    <button id="toggleLang">EN</button>
+</div>
+<div class="header-box">
+   <h1 id="title">النهدي للاطارات تتعدد الخيارات</h1>
+
+</div>
+
+<div class="container">
+    <!-- شعار PNG -->
+    <img src="logo.png" alt="Logo" class="logo">
+
+    <h1 id="title">كوبون Alnahdi</h1>
+    <p id="description">استمتع 4 خدمة لسيارتك عند تركيب 4 إطارات!</p>
+
+    <form id="registrationForm">
+        <label id="labelName">الاسم:</label>
+        <input type="text" name="name" placeholder="اكتب اسمك" required>
+
+        <label id="labelCar">رقم السيارة:</label>
+        <input type="text" name="carNumber" placeholder="مثال: 123" required>
+
+        <label id="labelMobile">رقم الجوال:</label>
+        <input type="text" name="mobileNumber" placeholder="مثال: 055000" required>
+
+        <label id="labelInvoice">رقم الفاتورة:</label>
+        <input type="text" name="invoiceNumber" placeholder="مثال: 123" required>
+
+        <label id="labelCity">المدينة:</label>
+        <select name="city" required>
+            <option value="" id="cityDefault">اختر المدينة</option>
+            <option value="الرياض" id="city1">الرياض</option>
+            <option value="الدمام" id="city2">الدمام</option>
+            <option value="خميس مشيط" id="city3">خميس مشيط</option>
+            <option value="وادي الدواسر" id="city4">وادي الدواسر</option>
+            <option value="عرعر" id="city5">عرعر</option>
+        </select>
+
+        <label id="labelService">الخدمة المطلوبة:</label>
+        <select name="service" required>
+            <option value="" id="serviceDefault">اختر الخدمة</option>
+            <option value="تدوير" id="service1">تدوير</option>
+            <option value="فحص إطارات" id="service2">فحص إطارات</option>
+            <option value="فحص بطارية" id="service3">فحص بطارية</option>
+            <option value="فحص ميزان" id="service4">فحص ميزان</option>
+        </select>
+
+        <button type="submit" id="submitBtn">تقديم</button>
+    </form>
+
+    <p id="responseMessage"></p>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
