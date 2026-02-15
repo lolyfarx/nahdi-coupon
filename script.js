@@ -1,70 +1,95 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbytcEfXefvI0jU_CT1v433hW0ADewQgdcdKex6h1Sp7z9F5imd8Xrok4qPBPa1xE82E/exec'; 
-const form = document.getElementById('registrationForm');
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzXXHCfGtCUfJx2u2tlM48glgiRItFnyGrM6uH8KmFoU013ssgHlhDRi72Iww9mqDWbkw/exec';
 let isArabic = true;
 
 document.getElementById('toggleLang').addEventListener('click', function() {
     isArabic = !isArabic;
-    this.innerText = isArabic ? 'En' : 'العربية'; 
+    this.innerText = isArabic ? 'En' : 'العربية';
     document.documentElement.dir = isArabic ? "rtl" : "ltr";
-    updateLanguage();
+    updateTranslations();
 });
 
-function updateLanguage() {
-    document.getElementById('title').innerText = isArabic ? 'كوبون الخدمة المجاني' : 'FREE SERVICE COUPON';
-    document.getElementById('description').innerText = isArabic ? 'استمتع بـ 4 خدمات عند شرائك 4 إطارات!' : 'Enjoy 4 services when buying 4 tires!';
+function updateTranslations() {
+    // الصفحة الرئيسية
+    document.getElementById('mainTitle').innerText = isArabic ? 'كوبون الخدمة المجاني' : 'FREE SERVICE COUPON';
+    document.getElementById('regBtnText').innerText = isArabic ? 'التسجيل في الكوبون المجاني' : 'Register for Free Coupon';
+    document.getElementById('regBtnSub').innerText = isArabic ? '(التسجيل لأول مرة)' : '(First Time Registration)';
+    document.getElementById('execBtnText').innerText = isArabic ? 'اضغط لتنفيذ الخدمة المجانية' : 'Click to Execute Service';
+    document.getElementById('execBtnSub').innerText = isArabic ? '(عند طلب الخدمة بالفرع)' : '(When requesting at branch)';
+
+    // صفحة التسجيل
+    document.getElementById('regTitle').innerText = isArabic ? 'تسجيل البيانات' : 'Register Data';
+    document.getElementById('lblBranch').innerText = isArabic ? 'فرع النهدي رقم:' : 'Al-Nahdi Branch No:';
+    document.getElementById('lblInvoice').innerText = isArabic ? 'رقم الفاتورة:' : 'Invoice Number:';
+    document.getElementById('lblName').innerText = isArabic ? 'الاسم:' : 'Name:';
+    document.getElementById('lblCarDetails').innerText = isArabic ? 'نوع وموديل السيارة:' : 'Car Type & Model:';
+    document.getElementById('lblMobile').innerText = isArabic ? 'رقم الجوال:' : 'Mobile Number:';
     
-    // إضافة ترجمة الحقل الجديد
-    document.getElementById('labelBranch').innerText = isArabic ? 'فرع النهدي رقم:' : 'Al-Nahdi Branch No:';
-    document.getElementById('branchInput').placeholder = isArabic ? 'اكتب رقم الفرع' : 'Enter Branch Number';
+    // الأمثلة الاسترشادية (Placeholders)
+    document.getElementById('branchInput').placeholder = isArabic ? 'اكتب رقم الفرع' : 'Enter branch number';
+    document.getElementById('invoiceInput').placeholder = isArabic ? 'اكتب رقم الفاتورة' : 'Enter invoice number';
+    document.getElementById('nameInput').placeholder = isArabic ? 'اكتب اسمك الثلاثي' : 'Enter your full name';
+    document.getElementById('carInput').placeholder = isArabic ? 'مثال: تويوتا كامري 2026' : 'Ex: Toyota Camry 2026';
+    document.getElementById('mobileInput').placeholder = '05XXXXXXXX';
 
-    document.getElementById('labelName').innerText = isArabic ? 'الاسم:' : 'Name:';
-    document.getElementById('labelCar').innerText = isArabic ? 'نوع السيارة:' : 'Car Type:';
-    document.getElementById('labelModel').innerText = isArabic ? 'موديل السيارة (السنة):' : 'Car Model (Year):';
-    document.getElementById('labelMobile').innerText = isArabic ? 'رقم الجوال:' : 'Mobile Number:';
-    document.getElementById('labelCity').innerText = isArabic ? 'المدينة:' : 'City:';
-    document.getElementById('labelService').innerText = isArabic ? 'الخدمة المطلوبة:' : 'Requested Service:';
+    // صفحة التنفيذ
+    document.getElementById('execTitle').innerText = isArabic ? 'تنفيذ الخدمة' : 'Service Execution';
+    document.getElementById('lblExecBranch').innerText = isArabic ? 'الفرع المتواجد به للتنفيذ:' : 'Current Branch for Service:';
+    document.getElementById('lblExecInvoice').innerText = isArabic ? 'رقم الفاتورة:' : 'Invoice Number:';
+    document.getElementById('execBranchInput').placeholder = isArabic ? 'اسم الفرع الحالي' : 'Current branch name';
+    document.getElementById('execSubmitBtn').innerText = isArabic ? 'تم التنفيذ' : 'Service Executed';
+    document.getElementById('lblRate').innerText = isArabic ? 'تقييم الخدمة' : 'Rate our Service';
+    document.getElementById('finishBtn').innerText = isArabic ? 'إنهاء' : 'Finish';
 
-    document.getElementById('nameInput').placeholder = isArabic ? 'اكتب اسمك' : 'Enter your name';
-    document.getElementById('carTypeInput').placeholder = isArabic ? 'مثال: تويوتا كامري' : 'Ex: Toyota Camry';
-    document.getElementById('carModelInput').placeholder = isArabic ? '2026' : '2026';
-    document.getElementById('mobileInput').placeholder = isArabic ? '0550000000' : '0550000000';
-
-    document.getElementById('cityDefault').innerText = isArabic ? 'اختر المدينة' : 'Select City';
-    document.getElementById('city1').innerText = isArabic ? 'الرياض' : 'Riyadh';
-    document.getElementById('city2').innerText = isArabic ? 'الدمام' : 'Dammam';
-    document.getElementById('city3').innerText = isArabic ? 'خميس مشيط' : 'Khamis Mushait';
-    document.getElementById('city4').innerText = isArabic ? 'وادي الدواسر' : 'Wadi Ad-Dawasir';
-    document.getElementById('city5').innerText = isArabic ? 'عرعر' : 'Arar';
-
-    document.getElementById('serviceDefault').innerText = isArabic ? 'اختر الخدمة' : 'Select Service';
-    document.getElementById('optAll').innerText = isArabic ? 'الكل (جميع الخدمات)' : 'All (All Services)';
-    document.getElementById('optRotate').innerText = isArabic ? 'تدوير' : 'Rotation';
-    document.getElementById('optCheckTires').innerText = isArabic ? 'فحص إطارات' : 'Tire Check';
-    document.getElementById('optCheckBattery').innerText = isArabic ? 'فحص بطارية' : 'Battery Check';
-    document.getElementById('optCheckBalance').innerText = isArabic ? 'فحص ميزان' : 'Alignment Check';
-
-    document.getElementById('noteText').innerText = isArabic ? 'ملحوظة: يرجى إحضار الفاتورة عند الحضور' : 'Note: Please bring the invoice upon arrival';
-    document.getElementById('thanksText').innerText = isArabic ? 'شكراً على ثقتكم بفروع النهدي' : 'Thank you for your trust in Alnahdi';
-    document.getElementById('footerCompany').innerText = isArabic ? 'شركة ياسر يسلم النهدي التجارية' : 'Yasser Yaslam Alnahdi Trading Co.';
+    // الشكر والرجوع
+    document.getElementById('thanksTitle').innerText = isArabic ? 'شكراً لاختياركم النهدي للإطارات' : 'Thank you for choosing Al-Nahdi Tires';
+    document.getElementById('thanksSub').innerText = isArabic ? 'نسعد بخدمتكم' : 'Happy to serve you';
+    document.getElementById('backBtnReg').innerText = isArabic ? 'رجوع' : 'Back';
+    document.getElementById('backBtnExec').innerText = isArabic ? 'رجوع' : 'Back';
     document.getElementById('submitBtn').innerText = isArabic ? 'تقديم' : 'Submit';
+    document.getElementById('footerText').innerText = isArabic ? 'شركة ياسر يسلم النهدي التجارية' : 'Yasser Yaslam Al-Nahdi Trading Co.';
 }
 
-form.addEventListener('submit', e => {
-    e.preventDefault();
-    const submitBtn = document.getElementById('submitBtn');
-    submitBtn.disabled = true;
-    submitBtn.innerText = isArabic ? 'جاري الإرسال...' : 'Sending...';
+function showPage(pageId) {
+    document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
+    document.getElementById(pageId).classList.remove('hidden');
+}
 
-    fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-    .then(response => {
-        alert(isArabic ? 'تم استلام بياناتك بنجاح!' : 'Data received successfully!');
-        form.reset();
-        submitBtn.disabled = false;
-        submitBtn.innerText = isArabic ? 'تقديم' : 'Submit';
-    })
-    .catch(error => {
-        alert(isArabic ? 'حدث خطأ في الإرسال' : 'Error in submission');
-        submitBtn.disabled = false;
-        submitBtn.innerText = isArabic ? 'تقديم' : 'Submit';
+// معالجة النماذج
+document.getElementById('registrationForm').onsubmit = function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.innerText = isArabic ? 'جاري التحقق...' : 'Checking...';
+    fetch(scriptURL, { method: 'POST', body: new FormData(this) })
+    .then(res => res.text())
+    .then(data => {
+        if(data === "DUPLICATE") {
+            alert(isArabic ? "تم التسجيل مسبقاً! يرجى التوجه لصفحة تنفيذ الخدمة." : "Already registered! Please go to service execution page.");
+        } else {
+            showPage('thanksSection');
+        }
+        btn.innerText = isArabic ? 'تقديم' : 'Submit';
     });
+};
+
+document.getElementById('executionForm').onsubmit = function(e) {
+    e.preventDefault();
+    document.getElementById('execSubmitBtn').classList.add('hidden');
+    document.getElementById('ratingSection').classList.remove('hidden');
+    fetch(scriptURL, { method: 'POST', body: new FormData(this) });
+};
+
+// النجوم
+document.querySelectorAll('.stars span').forEach(star => {
+    star.onclick = function() {
+        let val = this.dataset.v;
+        document.getElementById('ratingValue').value = val;
+        document.querySelectorAll('.stars span').forEach(s => s.classList.toggle('active', s.dataset.v <= val));
+    };
 });
+
+function finishProcess() {
+    const form = document.getElementById('executionForm');
+    fetch(scriptURL, { method: 'POST', body: new FormData(form) }).then(() => showPage('thanksSection'));
+}
+</script>

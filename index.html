@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">كوبون الخدمة المجاني</title>
-    <link rel="stylesheet" href="style.css">
+    <?!= include('style'); ?>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Cairo:wght@700;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -16,56 +16,77 @@
         <button id="toggleLang">En</button>
     </div>
 
-    <div class="container">
-        <h1 id="title">كوبون الخدمة المجاني</h1>
-        <p id="description">استمتع بـ 4 خدمات عند شرائك 4 إطارات!</p>
+    <div id="homePage" class="container">
+        <h1 id="mainTitle">كوبون الخدمة المجاني</h1>
+        <div class="portal-box" onclick="showPage('regPage')">
+            <span id="regBtnText">التسجيل في الكوبون المجاني</span>
+            <small id="regBtnSub">(التسجيل لأول مرة)</small>
+        </div>
+        <div class="portal-box" onclick="showPage('execPage')">
+            <span id="execBtnText">اضغط لتنفيذ الخدمة المجانية</span>
+            <small id="execBtnSub">(عند طلب الخدمة بالفرع)</small>
+        </div>
+    </div>
 
+    <div id="regPage" class="container hidden">
+        <h1 id="regTitle">تسجيل البيانات</h1>
         <form id="registrationForm">
-            <label id="labelBranch">فرع النهدي رقم:</label>
-            <input type="number" name="branchNumber" id="branchInput" placeholder="اكتب رقم الفرع" required>
+            <input type="hidden" name="formType" value="registration">
+            
+            <label id="lblBranch">فرع النهدي رقم:</label>
+            <input type="number" name="branchNumber" id="branchInput" required>
 
-            <label id="labelName">الاسم:</label>
-            <input type="text" name="name" id="nameInput" placeholder="اكتب اسمك" required>
+            <label id="lblInvoice">رقم الفاتورة:</label>
+            <input type="text" name="invoiceNumber" id="invoiceInput" required>
 
-            <label id="labelCar">نوع السيارة:</label>
-            <input type="text" name="carType" id="carTypeInput" placeholder="مثال: تويوتا كامري" required>
+            <label id="lblName">الاسم:</label>
+            <input type="text" name="name" id="nameInput" required>
 
-            <label id="labelModel">موديل السيارة (السنة):</label>
-            <input type="number" name="carModel" id="carModelInput" placeholder="2026" required>
+            <label id="lblCarDetails">نوع وموديل السيارة:</label>
+            <input type="text" name="carDetails" id="carInput" required>
 
-            <label id="labelMobile">رقم الجوال:</label>
-            <input type="tel" name="mobileNumber" id="mobileInput" placeholder="0550000000" required pattern="[0-9]{10}">
-
-            <label id="labelCity">المدينة:</label>
-            <select name="city" id="citySelect" required>
-                <option value="" id="cityDefault">اختر المدينة</option>
-                <option value="الرياض" id="city1">الرياض</option>
-                <option value="الدمام" id="city2">الدمام</option>
-                <option value="خميس مشيط" id="city3">خميس مشيط</option>
-                <option value="وادي الدواسر" id="city4">وادي الدواسر</option>
-                <option value="عرعر" id="city5">عرعر</option>
-            </select>
-
-            <label id="labelService">الخدمة المطلوبة:</label>
-            <select name="service" id="serviceSelect" required>
-                <option value="" id="serviceDefault">اختر الخدمة</option>
-                <option value="الكل" id="optAll">الكل (جميع الخدمات)</option>
-                <option value="تدوير" id="optRotate">تدوير</option>
-                <option value="فحص إطارات" id="optCheckTires">فحص إطارات</option>
-                <option value="فحص بطارية" id="optCheckBattery">فحص بطارية</option>
-                <option value="فحص ميزان" id="optCheckBalance">فحص ميزان</option>
-            </select>
-
-            <p id="noteText" class="note-orange">ملحوظة: يرجى إحضار الفاتورة عند الحضور</p>
-            <p id="thanksText" class="thanks-msg">شكراً على ثقتكم بفروع النهدي</p>
+            <label id="lblMobile">رقم الجوال:</label>
+            <input type="tel" name="mobileNumber" id="mobileInput" required pattern="[0-9]{10}">
 
             <button type="submit" id="submitBtn">تقديم</button>
+            <button type="button" class="back-btn" id="backBtnReg" onclick="showPage('homePage')">رجوع</button>
         </form>
     </div>
 
-    <div class="footer-note" id="footerCompany">شركة ياسر يسلم النهدي التجارية</div>
+    <div id="execPage" class="container hidden">
+        <h1 id="execTitle">تنفيذ الخدمة</h1>
+        <form id="executionForm">
+            <input type="hidden" name="formType" value="execution">
+            
+            <label id="lblExecBranch">الفرع المتواجد به لتنفيذ الخدمة:</label>
+            <input type="text" name="execBranch" id="execBranchInput" required>
+
+            <label id="lblExecInvoice">رقم الفاتورة:</label>
+            <input type="text" name="execInvoice" id="execInvoiceInput" required>
+
+            <button type="submit" id="execSubmitBtn">تم التنفيذ</button>
+            
+            <div id="ratingSection" class="hidden">
+                <label id="lblRate" style="text-align:center">تقييم الخدمة</label>
+                <div class="stars">
+                    <span data-v="5">★</span><span data-v="4">★</span><span data-v="3">★</span><span data-v="2">★</span><span data-v="1">★</span>
+                </div>
+                <input type="hidden" name="rating" id="ratingValue">
+                <button type="button" id="finishBtn" onclick="finishProcess()">إنهاء</button>
+            </div>
+            <button type="button" class="back-btn" id="backBtnExec" onclick="showPage('homePage')">رجوع</button>
+        </form>
+    </div>
+
+    <div id="thanksSection" class="container hidden">
+        <h1 id="thanksTitle" style="color: #1a237e; font-size: 28px;">شكراً لاختياركم النهدي للإطارات</h1>
+        <p id="thanksSub" class="thanks-msg">نسعد بخدمتكم</p>
+        <button class="back-btn" id="homeReturn" onclick="location.reload()">العودة للرئيسية</button>
+    </div>
+
+    <div class="footer-note" id="footerText">شركة ياسر يسلم النهدي التجارية</div>
 </div>
 
-<script src="script.js"></script>
+<?!= include('script'); ?>
 </body>
 </html>
