@@ -55,7 +55,7 @@ form label {
     color: #004aad;
 }
 
-/* تنسيق المدخلات والقائمة المنسدلة بنفس مقاساتك الأصلية */
+/* تنسيق المدخلات والقوائم المنسدلة بنفس مقاسك الأصلي */
 form input, form select {
     width: 100%;
     padding: 12px;
@@ -67,7 +67,6 @@ form input, form select {
     font-size: 16px;
 }
 
-/* تنسيق المربعات البرتقالية للبوابة */
 .portal-box {
     background-color: #ff6600;
     color: white;
@@ -90,10 +89,9 @@ form input, form select {
     margin-top: 5px;
 }
 
-/* التعديل الجديد: مقدم الكوبون بلون رمادي وخط صغير */
 .provider-text {
     font-size: 10px;
-    color: #808080;
+    color: #808080; /* رمادي */
     font-weight: normal;
 }
 
@@ -120,7 +118,6 @@ form input, form select {
     font-size: 15px;
 }
 
-/* النجوم والتقييم */
 .stars {
     direction: ltr;
     font-size: 45px;
