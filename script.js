@@ -1,4 +1,4 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbz2lOpsqZvZ4AOj9WHuOqrH7LkoL1lobZMDzlhEYgmmNVY-XZ0Sh1_sAyRhEv7821LIVQ/exec'; 
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyUFqQiFWeoQ_ODBXr_PQg-g6WiVJuDAtZ4ZmYtDm4vZUyfzGSeDtHvJA-Wr9JrxMwWTA/exec'; 
 const form = document.getElementById('registrationForm');
 let isArabic = true;
 
