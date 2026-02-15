@@ -1,7 +1,10 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzc2WC6Cn3FjYz-aSeoafp608OTwcAFr-TQLSqRUW8Wke7qrrUnshClGoVrMTZyyWiF0A/exec';
+const scriptURL = 'ضع_رابط_النشر_هنا';
 let isArabic = true;
 
-window.onload = updateTranslations;
+window.onload = () => {
+    updateTranslations();
+    initStars(); // تفعيل النجوم
+};
 
 document.getElementById('toggleLang').addEventListener('click', function() {
     isArabic = !isArabic;
@@ -19,6 +22,7 @@ function updateTranslations() {
             lblS: "الخدمة المطلوبة:", serDef: "اختر الخدمة", provReg: "مقدم الكوبون", provExec: "مقدم الخدمة", 
             sub: "تقديم", back: "رجوع", thanks: "شكراً لاختياركم النهدي للإطارات", exec: "تنفيذ الخدمة",
             phI: "مثال: 12345", phN: "مثال: محمد علي", phM: "مثال: 05xxxxxxxx", phC: "مثال: تويوتا كامري 2026", phB: "مثال: 10",
+            done: "تم التنفيذ", finish: "إنهاء", rate: "تقييم الخدمة", home: "العودة للرئيسية",
             cities: ["الرياض", "الدمام", "خميس مشيط", "وادي الدواسر", "عرعر"],
             services: ["ترصيص", "نيتروجين", "تبديل أماكن", "فحص ميزان"]
         },
@@ -29,6 +33,7 @@ function updateTranslations() {
             lblS: "Required Service:", serDef: "Select Service", provReg: "Coupon Provider", provExec: "Service Provider", 
             sub: "Submit", back: "Back", thanks: "Thank you for choosing Al-Nahdi", exec: "Service Execution",
             phI: "Ex: 12345", phN: "Ex: John Doe", phM: "Ex: 05xxxxxxxx", phC: "Ex: Toyota Camry 2026", phB: "Ex: 10",
+            done: "Done", finish: "Finish", rate: "Service Rating", home: "Back to Home",
             cities: ["Riyadh", "Dammam", "Khamis Mushait", "Wadi Ad-Dawasir", "Arar"],
             services: ["Balancing", "Nitrogen", "Tire Rotation", "Alignment Check"]
         }
@@ -52,6 +57,15 @@ function updateTranslations() {
     document.getElementById('execTitle').innerText = curr.exec;
     document.getElementById('submitBtn').innerText = curr.sub;
     document.getElementById('thanksTitle').innerText = curr.thanks;
+    document.getElementById('execSubmitBtn').innerText = curr.done;
+    document.getElementById('finishBtn').innerText = curr.finish;
+    document.getElementById('lblRate').innerText = curr.rate;
+    document.getElementById('btnHome').innerText = curr.home;
+    
+    // أزرار الرجوع
+    document.getElementById('btnBackCity').innerText = curr.back;
+    document.getElementById('btnBackReg').innerText = curr.back;
+    document.getElementById('btnBackExec').innerText = curr.back;
 
     document.getElementById('invPH').placeholder = curr.phI;
     document.getElementById('namePH').placeholder = curr.phN;
@@ -79,6 +93,19 @@ function updateTranslations() {
     curr.services.forEach(s => { serSel.innerHTML += `<option value="${s}">${s}</option>`; });
 }
 
+function initStars() {
+    const stars = document.querySelectorAll('.stars span');
+    stars.forEach(star => {
+        star.onclick = function() {
+            let val = parseInt(this.dataset.v);
+            document.getElementById('ratingValue').value = val;
+            stars.forEach(s => {
+                s.classList.toggle('active', parseInt(s.dataset.v) <= val);
+            });
+        };
+    });
+}
+
 function showPage(pageId) {
     document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
     document.getElementById(pageId).classList.remove('hidden');
@@ -104,16 +131,7 @@ document.getElementById('executionForm').onsubmit = function(e) {
     e.preventDefault();
     document.getElementById('execSubmitBtn').classList.add('hidden');
     document.getElementById('ratingSection').classList.remove('hidden');
-    fetch(scriptURL, { method: 'POST', body: new FormData(this) });
 };
-
-document.querySelectorAll('.stars span').forEach(star => {
-    star.onclick = function() {
-        let val = this.dataset.v;
-        document.getElementById('ratingValue').value = val;
-        document.querySelectorAll('.stars span').forEach(s => s.classList.toggle('active', s.dataset.v <= val));
-    };
-});
 
 function finishProcess() {
     const formData = new FormData(document.getElementById('executionForm'));

@@ -29,7 +29,7 @@
     <div id="cityPage" class="container hidden">
         <div id="cityTitle" class="city-title">أختر مدينة أو الأقرب إليك</div>
         <div id="cityList"></div>
-        <button type="button" class="back-btn" onclick="showPage('homePage')">رجوع</button>
+        <button type="button" class="back-btn" id="btnBackCity" onclick="showPage('homePage')">رجوع</button>
     </div>
 
     <div id="regPage" class="container hidden">
@@ -41,24 +41,19 @@
             
             <label id="lblInvoice">رقم الفاتورة:</label>
             <input type="text" name="invoiceNumber" id="invPH" required>
-            
             <label id="lblName">الاسم:</label>
             <input type="text" name="name" id="namePH" required>
-            
             <label id="lblMobile">رقم الجوال:</label>
             <input type="tel" name="mobileNumber" id="mobPH" required pattern="[0-9]{10}">
-            
             <label id="lblCarDetails">نوع وموديل السيارة:</label>
             <input type="text" name="carDetails" id="carPH" required>
-            
             <label id="lblService">الخدمة المطلوبة:</label>
             <select name="service" id="serviceSelect" required></select>
-            
             <label><span id="lblBranch">رقم فرع النهدي:</span> <span class="provider-text" id="lblProviderReg">مقدم الكوبون</span></label>
             <input type="number" name="branchNumber" id="brPH" required>
             
             <button type="submit" id="submitBtn">تقديم</button>
-            <button type="button" class="back-btn" onclick="showPage('cityPage')">رجوع</button>
+            <button type="button" class="back-btn" id="btnBackReg" onclick="showPage('cityPage')">رجوع</button>
         </form>
     </div>
 
@@ -70,23 +65,25 @@
             <input type="number" name="execBranch" id="brExecPH" required>
             <label id="lblExecInvoice">رقم الفاتورة:</label>
             <input type="text" name="execInvoice" id="invExecPH" required>
+            
             <button type="submit" id="execSubmitBtn">تم التنفيذ</button>
+            
             <div id="ratingSection" class="hidden">
                 <label id="lblRate">تقييم الخدمة</label>
-                <div class="stars">
-                    <span data-v="5">★</span><span data-v="4">★</span><span data-v="3">★</span><span data-v="2">★</span><span data-v="1">★</span>
+                <div class="stars" id="starContainer">
+                    <span data-v="1">★</span><span data-v="2">★</span><span data-v="3">★</span><span data-v="4">★</span><span data-v="5">★</span>
                 </div>
-                <input type="hidden" name="rating" id="ratingValue">
+                <input type="hidden" name="rating" id="ratingValue" value="0">
                 <button type="button" id="finishBtn" onclick="finishProcess()">إنهاء</button>
             </div>
-            <button type="button" class="back-btn" onclick="showPage('homePage')">رجوع</button>
+            <button type="button" class="back-btn" id="btnBackExec" onclick="showPage('homePage')">رجوع</button>
         </form>
     </div>
 
     <div id="thanksSection" class="container hidden">
         <h1 id="thanksTitle">شكراً لاختياركم النهدي للإطارات</h1>
         <p class="thanks-msg" id="thanksSub">نسعد بخدمتكم</p>
-        <button class="back-btn" onclick="location.reload()">العودة للرئيسية</button>
+        <button class="back-btn" id="btnHome" onclick="location.reload()">العودة للرئيسية</button>
     </div>
 </div>
 <script src="script.js"></script>

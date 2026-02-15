@@ -42,7 +42,6 @@ h1 {
     margin-bottom: 20px;
 }
 
-/* تنسيق عنوان واجهة المدن */
 .city-title {
     font-size: 18px;
     font-weight: bold;
@@ -51,20 +50,18 @@ h1 {
     white-space: nowrap;
 }
 
-/* مربعات المدن الرمادية كما طلبت */
 .city-box {
     width: 100%;
     padding: 15px;
     margin-bottom: 12px;
-    border: 2px solid #808080; /* إطار رمادي */
-    background-color: transparent; /* لون خلفية الصفحة */
-    color: #4f4f4f; /* رمادي غامق */
+    border: 2px solid #808080;
+    background-color: transparent;
+    color: #4f4f4f;
     border-radius: 8px;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     font-family: 'Cairo', sans-serif;
-    transition: 0.2s;
 }
 
 .hidden { display: none; }
@@ -78,7 +75,6 @@ form label {
     color: #004aad;
 }
 
-/* لضبط المحاذاة عند قلب اللغة للانجليزية */
 html[dir="ltr"] form label { text-align: left; }
 
 form input, form select {
@@ -120,7 +116,47 @@ form input, form select {
     font-weight: normal;
 }
 
-#submitBtn, #execSubmitBtn, #finishBtn {
+/* تعديل جميع الأزرار لتكون برتقالية وكبيرة */
+#submitBtn, #execSubmitBtn, #finishBtn, .back-btn, .lang-switch-container button {
     background-color: #ff6600;
     color: white;
     border: none;
+    padding: 16px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 20px; /* أكبر قليلاً */
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    font-family: 'Cairo', sans-serif;
+    text-decoration: none; /* إزالة الخط تحت كلمة رجوع */
+}
+
+/* استثناء بسيط لزر اللغة ليبقى في الأعلى */
+.lang-switch-container button {
+    width: auto;
+    padding: 10px 30px;
+    font-size: 18px;
+}
+
+/* رموز التقييم (النجوم) */
+.stars {
+    direction: ltr;
+    font-size: 60px; /* تكبير الرموز */
+    color: #ddd;
+    margin: 20px 0;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.stars span {
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.stars span.active {
+    color: #ffcc00;
+}
+
+.lang-switch-container { margin: 20px 0; }
