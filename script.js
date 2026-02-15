@@ -1,7 +1,7 @@
-<script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbycUMkU6E1-nFRHzh7fDE6v4tgfMR7SYezCiZn9-Fh7Qr01t1KRL2s9YmY89eyxLek8ig/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbyHXeUv9J4dfurqCZ_umxcK117Y4soM0jlNCAbGYSTalDzBkogP6iYc8KlFwiC_LJSZwQ/exec';
 let isArabic = true;
 
+// تبديل اللغة
 document.getElementById('toggleLang').addEventListener('click', function() {
     isArabic = !isArabic;
     this.innerText = isArabic ? 'En' : 'العربية';
@@ -26,27 +26,35 @@ function updateTranslations() {
     document.getElementById('lblCarDetails').innerText = curr.lblC;
     document.getElementById('lblMobile').innerText = curr.lblM;
     document.getElementById('submitBtn').innerText = curr.sub;
-    document.getElementById('backBtnReg').innerText = curr.back;
-    document.getElementById('backBtnExec').innerText = curr.back;
     document.getElementById('thanksTitle').innerText = curr.thanks;
     document.getElementById('thanksSub').innerText = curr.happy;
 }
 
+// التنقل بين الصفحات
 function showPage(pageId) {
     document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
     document.getElementById(pageId).classList.remove('hidden');
 }
 
+// نموذج التسجيل
 document.getElementById('registrationForm').onsubmit = function(e) {
     e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.innerText = isArabic ? "جاري التحقق..." : "Checking...";
+    
     fetch(scriptURL, { method: 'POST', body: new FormData(this) })
     .then(res => res.text())
     .then(data => {
-        if(data === "DUPLICATE") alert(isArabic ? "مسجل مسبقاً!" : "Already registered!");
-        else showPage('thanksSection');
+        if(data === "DUPLICATE") {
+            alert(isArabic ? "تم التسجيل مسبقاً برقم الهاتف أو الفاتورة!" : "Already registered!");
+        } else {
+            showPage('thanksSection');
+        }
+        btn.innerText = isArabic ? "تقديم" : "Submit";
     });
 };
 
+// نموذج التنفيذ
 document.getElementById('executionForm').onsubmit = function(e) {
     e.preventDefault();
     document.getElementById('execSubmitBtn').classList.add('hidden');
@@ -54,6 +62,7 @@ document.getElementById('executionForm').onsubmit = function(e) {
     fetch(scriptURL, { method: 'POST', body: new FormData(this) });
 };
 
+// النجوم
 document.querySelectorAll('.stars span').forEach(star => {
     star.onclick = function() {
         let val = this.dataset.v;
@@ -64,6 +73,6 @@ document.querySelectorAll('.stars span').forEach(star => {
 
 function finishProcess() {
     const form = document.getElementById('executionForm');
-    fetch(scriptURL, { method: 'POST', body: new FormData(form) }).then(() => showPage('thanksSection'));
+    fetch(scriptURL, { method: 'POST', body: new FormData(form) })
+    .then(() => showPage('thanksSection'));
 }
-</script>
