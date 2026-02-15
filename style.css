@@ -116,33 +116,31 @@ form input, form select {
     font-weight: normal;
 }
 
-/* تعديل جميع الأزرار لتكون برتقالية وكبيرة */
+/* تصغير الأزرار قليلاً مع الحفاظ على اللون البرتقالي */
 #submitBtn, #execSubmitBtn, #finishBtn, .back-btn, .lang-switch-container button {
     background-color: #ff6600;
     color: white;
     border: none;
-    padding: 16px;
+    padding: 12px; /* تم التصغير من 16 */
     width: 100%;
     border-radius: 10px;
-    font-size: 20px; /* أكبر قليلاً */
+    font-size: 18px; /* تم التصغير من 20 */
     font-weight: bold;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 15px;
     font-family: 'Cairo', sans-serif;
-    text-decoration: none; /* إزالة الخط تحت كلمة رجوع */
+    text-decoration: none;
 }
 
-/* استثناء بسيط لزر اللغة ليبقى في الأعلى */
 .lang-switch-container button {
     width: auto;
-    padding: 10px 30px;
-    font-size: 18px;
+    padding: 8px 25px;
+    font-size: 16px;
 }
 
-/* رموز التقييم (النجوم) */
 .stars {
     direction: ltr;
-    font-size: 60px; /* تكبير الرموز */
+    font-size: 60px;
     color: #ddd;
     margin: 20px 0;
     display: flex;
@@ -150,13 +148,6 @@ form input, form select {
     gap: 10px;
 }
 
-.stars span {
-    cursor: pointer;
-    transition: color 0.2s;
-}
-
-.stars span.active {
-    color: #ffcc00;
-}
-
+.stars span { cursor: pointer; transition: color 0.2s; }
+.stars span.active { color: #ffcc00; }
 .lang-switch-container { margin: 20px 0; }

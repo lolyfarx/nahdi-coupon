@@ -8,7 +8,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Cairo:wght@700;900&display=swap" rel="stylesheet">
 </head>
 <body>
-
 <div class="main-wrapper">
     <div class="header-spacer"></div>
     <div class="lang-switch-container"><button id="toggleLang">En</button></div>
@@ -38,7 +37,6 @@
         <form id="registrationForm">
             <input type="hidden" name="formType" value="registration">
             <input type="hidden" name="city" id="hiddenCity">
-            
             <label id="lblInvoice">رقم الفاتورة:</label>
             <input type="text" name="invoiceNumber" id="invPH" required>
             <label id="lblName">الاسم:</label>
@@ -51,7 +49,6 @@
             <select name="service" id="serviceSelect" required></select>
             <label><span id="lblBranch">رقم فرع النهدي:</span> <span class="provider-text" id="lblProviderReg">مقدم الكوبون</span></label>
             <input type="number" name="branchNumber" id="brPH" required>
-            
             <button type="submit" id="submitBtn">تقديم</button>
             <button type="button" class="back-btn" id="btnBackReg" onclick="showPage('cityPage')">رجوع</button>
         </form>
@@ -65,9 +62,7 @@
             <input type="number" name="execBranch" id="brExecPH" required>
             <label id="lblExecInvoice">رقم الفاتورة:</label>
             <input type="text" name="execInvoice" id="invExecPH" required>
-            
             <button type="submit" id="execSubmitBtn">تم التنفيذ</button>
-            
             <div id="ratingSection" class="hidden">
                 <label id="lblRate">تقييم الخدمة</label>
                 <div class="stars" id="starContainer">

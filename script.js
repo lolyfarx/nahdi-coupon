@@ -1,9 +1,9 @@
-const scriptURL = 'ضع_رابط_النشر_هنا';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxsjuJNCJI-eG7DZv-Pg7dkwrTXz--oxIxX3oHOu-nliVjHe3q3AXKRJQhaVwDf7jfL4w/exec';
 let isArabic = true;
 
 window.onload = () => {
     updateTranslations();
-    initStars(); // تفعيل النجوم
+    initStars();
 };
 
 document.getElementById('toggleLang').addEventListener('click', function() {
@@ -24,7 +24,7 @@ function updateTranslations() {
             phI: "مثال: 12345", phN: "مثال: محمد علي", phM: "مثال: 05xxxxxxxx", phC: "مثال: تويوتا كامري 2026", phB: "مثال: 10",
             done: "تم التنفيذ", finish: "إنهاء", rate: "تقييم الخدمة", home: "العودة للرئيسية",
             cities: ["الرياض", "الدمام", "خميس مشيط", "وادي الدواسر", "عرعر"],
-            services: ["ترصيص", "نيتروجين", "تبديل أماكن", "فحص ميزان"]
+            services: ["تدوير اطارات", "فحص اطار", "فحص ميزان", "فحص بطارية"]
         },
         en: { 
             main: "FREE SERVICE COUPON", reg: "Register for Free Coupon", subTitle: "Register and enjoy the coupon!", 
@@ -35,7 +35,7 @@ function updateTranslations() {
             phI: "Ex: 12345", phN: "Ex: John Doe", phM: "Ex: 05xxxxxxxx", phC: "Ex: Toyota Camry 2026", phB: "Ex: 10",
             done: "Done", finish: "Finish", rate: "Service Rating", home: "Back to Home",
             cities: ["Riyadh", "Dammam", "Khamis Mushait", "Wadi Ad-Dawasir", "Arar"],
-            services: ["Balancing", "Nitrogen", "Tire Rotation", "Alignment Check"]
+            services: ["Tire Rotation", "Tire Inspection", "Alignment Check", "Battery Check"]
         }
     };
 
@@ -61,8 +61,6 @@ function updateTranslations() {
     document.getElementById('finishBtn').innerText = curr.finish;
     document.getElementById('lblRate').innerText = curr.rate;
     document.getElementById('btnHome').innerText = curr.home;
-    
-    // أزرار الرجوع
     document.getElementById('btnBackCity').innerText = curr.back;
     document.getElementById('btnBackReg').innerText = curr.back;
     document.getElementById('btnBackExec').innerText = curr.back;
@@ -99,9 +97,7 @@ function initStars() {
         star.onclick = function() {
             let val = parseInt(this.dataset.v);
             document.getElementById('ratingValue').value = val;
-            stars.forEach(s => {
-                s.classList.toggle('active', parseInt(s.dataset.v) <= val);
-            });
+            stars.forEach(s => { s.classList.toggle('active', parseInt(s.dataset.v) <= val); });
         };
     });
 }
