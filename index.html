@@ -27,15 +27,8 @@
     </div>
 
     <div id="cityPage" class="container hidden">
-        <h1 id="cityTitle">أختر مدينتك أو الأقرب إليك</h1>
-        <select id="mainCitySelect" onchange="goToRegistration(this.value)">
-            <option value="" id="cityDefault">اختر المدينة</option>
-            <option value="الرياض">الرياض</option>
-            <option value="الدمام">الدمام</option>
-            <option value="خميس مشيط">خميس مشيط</option>
-            <option value="وادي الدواسر">وادي الدواسر</option>
-            <option value="عرعر">عرعر</option>
-        </select>
+        <div id="cityTitle" class="city-title">أختر مدينة أو الأقرب إليك</div>
+        <div id="cityList"></div>
         <button type="button" class="back-btn" onclick="showPage('homePage')">رجوع</button>
     </div>
 
@@ -45,24 +38,25 @@
         <form id="registrationForm">
             <input type="hidden" name="formType" value="registration">
             <input type="hidden" name="city" id="hiddenCity">
+            
             <label id="lblInvoice">رقم الفاتورة:</label>
-            <input type="text" name="invoiceNumber" id="invPH" placeholder="مثال: 12345" required>
+            <input type="text" name="invoiceNumber" id="invPH" required>
+            
             <label id="lblName">الاسم:</label>
-            <input type="text" name="name" id="namePH" placeholder="مثال: محمد علي" required>
+            <input type="text" name="name" id="namePH" required>
+            
             <label id="lblMobile">رقم الجوال:</label>
-            <input type="tel" name="mobileNumber" id="mobPH" placeholder="مثال: 05xxxxxxxx" required pattern="[0-9]{10}">
+            <input type="tel" name="mobileNumber" id="mobPH" required pattern="[0-9]{10}">
+            
             <label id="lblCarDetails">نوع وموديل السيارة:</label>
-            <input type="text" name="carDetails" id="carPH" placeholder="مثال: تويوتا كامري 2026" required>
+            <input type="text" name="carDetails" id="carPH" required>
+            
             <label id="lblService">الخدمة المطلوبة:</label>
-            <select name="service" id="serviceSelect" required>
-                <option value="" id="serDefault">اختر الخدمة</option>
-                <option value="ترصيص">ترصيص</option>
-                <option value="نيتروجين">نيتروجين</option>
-                <option value="تبديل أماكن">تبديل أماكن</option>
-                <option value="فحص ميزان">فحص ميزان</option>
-            </select>
+            <select name="service" id="serviceSelect" required></select>
+            
             <label><span id="lblBranch">رقم فرع النهدي:</span> <span class="provider-text" id="lblProviderReg">مقدم الكوبون</span></label>
-            <input type="number" name="branchNumber" id="brPH" placeholder="مثال: 10" required>
+            <input type="number" name="branchNumber" id="brPH" required>
+            
             <button type="submit" id="submitBtn">تقديم</button>
             <button type="button" class="back-btn" onclick="showPage('cityPage')">رجوع</button>
         </form>
@@ -73,9 +67,9 @@
         <form id="executionForm">
             <input type="hidden" name="formType" value="execution">
             <label><span id="lblExecBranch">رقم فرع النهدي:</span> <span class="provider-text" id="lblProviderExec">مقدم الخدمة</span></label>
-            <input type="number" name="execBranch" id="brExecPH" placeholder="مثال: 15" required>
+            <input type="number" name="execBranch" id="brExecPH" required>
             <label id="lblExecInvoice">رقم الفاتورة:</label>
-            <input type="text" name="execInvoice" id="invExecPH" placeholder="اكتب رقم الفاتورة المسجل" required>
+            <input type="text" name="execInvoice" id="invExecPH" required>
             <button type="submit" id="execSubmitBtn">تم التنفيذ</button>
             <div id="ratingSection" class="hidden">
                 <label id="lblRate">تقييم الخدمة</label>

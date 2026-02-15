@@ -42,9 +42,32 @@ h1 {
     margin-bottom: 20px;
 }
 
-.hidden {
-    display: none;
+/* تنسيق عنوان واجهة المدن */
+.city-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #1a237e;
+    margin-bottom: 20px;
+    white-space: nowrap;
 }
+
+/* مربعات المدن الرمادية كما طلبت */
+.city-box {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 12px;
+    border: 2px solid #808080; /* إطار رمادي */
+    background-color: transparent; /* لون خلفية الصفحة */
+    color: #4f4f4f; /* رمادي غامق */
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    font-family: 'Cairo', sans-serif;
+    transition: 0.2s;
+}
+
+.hidden { display: none; }
 
 form label {
     display: block;
@@ -55,7 +78,9 @@ form label {
     color: #004aad;
 }
 
-/* تنسيق المدخلات والقوائم المنسدلة بنفس مقاسك الأصلي */
+/* لضبط المحاذاة عند قلب اللغة للانجليزية */
+html[dir="ltr"] form label { text-align: left; }
+
 form input, form select {
     width: 100%;
     padding: 12px;
@@ -91,7 +116,7 @@ form input, form select {
 
 .provider-text {
     font-size: 10px;
-    color: #808080; /* رمادي */
+    color: #808080;
     font-weight: normal;
 }
 
@@ -99,50 +124,3 @@ form input, form select {
     background-color: #ff6600;
     color: white;
     border: none;
-    padding: 16px;
-    width: 100%;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-.back-btn {
-    background: none;
-    border: none;
-    color: #666;
-    margin-top: 15px;
-    cursor: pointer;
-    text-decoration: underline;
-    font-size: 15px;
-}
-
-.stars {
-    direction: ltr;
-    font-size: 45px;
-    color: #ddd;
-    margin: 15px 0;
-}
-
-.stars span {
-    cursor: pointer;
-}
-
-.stars span.active {
-    color: #ffcc00;
-}
-
-.lang-switch-container {
-    margin: 20px 0;
-}
-
-.lang-switch-container button {
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-}
