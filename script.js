@@ -1,5 +1,4 @@
-<script>
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwWWkr6FI8QYla-Uo1PgOSGXFJf8L9l7yr5PeFrlSkaPtgWW-4KcxcDU71JufXb_zP9rw/exec'; 
+const scriptURL = 'https://script.google.com/macros/s/AKfycbz2lOpsqZvZ4AOj9WHuOqrH7LkoL1lobZMDzlhEYgmmNVY-XZ0Sh1_sAyRhEv7821LIVQ/exec'; 
 const form = document.getElementById('registrationForm');
 let isArabic = true;
 
@@ -14,6 +13,7 @@ function updateLanguage() {
     document.getElementById('title').innerText = isArabic ? 'كوبون الخدمة المجاني' : 'FREE SERVICE COUPON';
     document.getElementById('description').innerText = isArabic ? 'استمتع بـ 4 خدمات عند شرائك 4 إطارات!' : 'Enjoy 4 services when buying 4 tires!';
     
+    // إضافة ترجمة الحقل الجديد
     document.getElementById('labelBranch').innerText = isArabic ? 'فرع النهدي رقم:' : 'Al-Nahdi Branch No:';
     document.getElementById('branchInput').placeholder = isArabic ? 'اكتب رقم الفرع' : 'Enter Branch Number';
 
@@ -68,4 +68,3 @@ form.addEventListener('submit', e => {
         submitBtn.innerText = isArabic ? 'تقديم' : 'Submit';
     });
 });
-</script>
