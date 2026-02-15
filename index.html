@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title id="pageTitle">كوبون الخدمة المجاني</title>
-    <link rel="stylesheet" href="style.css">
+    <?!= include('style'); ?>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Cairo:wght@700;900&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -21,6 +21,9 @@
         <p id="description">استمتع بـ 4 خدمات عند شرائك 4 إطارات!</p>
 
         <form id="registrationForm">
+            <label id="labelBranch">فرع النهدي رقم:</label>
+            <input type="number" name="branchNumber" id="branchInput" placeholder="اكتب رقم الفرع" required>
+
             <label id="labelName">الاسم:</label>
             <input type="text" name="name" id="nameInput" placeholder="اكتب اسمك" required>
 
@@ -63,6 +66,6 @@
     <div class="footer-note" id="footerCompany">شركة ياسر يسلم النهدي التجارية</div>
 </div>
 
-<script src="script.js"></script>
+<?!= include('script'); ?>
 </body>
 </html>

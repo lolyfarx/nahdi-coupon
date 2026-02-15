@@ -1,122 +1,32 @@
-html, body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    min-height: 100vh;
-}
-
+<style>
+html, body { margin: 0; padding: 0; width: 100%; min-height: 100vh; }
 body {
     font-family: 'Cairo', sans-serif;
-    /* الخلفية تتحرك مع التصميم وتظهر من الأعلى */
     background: url('background.jpg') no-repeat center top scroll;
-    background-size: 100% auto; /* تصغير حجم الخلفية قليلاً لتناسب الهيدر */
+    background-size: 100% auto;
     background-color: #f0f0f0; 
 }
-
-.main-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 0 10px; /* مسافة 0.25 سم من الجوانب */
-}
-
-/* مساحة علوية لإظهار هيدر الخلفية */
-.header-spacer {
-    height: 120px; 
-}
-
-.lang-switch-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 20px;
-}
-
+.main-wrapper { display: flex; flex-direction: column; align-items: center; padding: 0 10px; }
+.header-spacer { height: 120px; }
+.lang-switch-container { width: 100%; display: flex; justify-content: center; margin-bottom: 20px; }
 .lang-switch-container button {
-    background-color: #ff6600;
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    border-radius: 20px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 15px;
+    background-color: #ff6600; color: white; border: none; padding: 10px 25px;
+    border-radius: 20px; font-weight: bold; cursor: pointer; font-size: 15px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.2);
 }
-
 .container {
-    background-color: #ffffff; /* لون أبيض صريح غير شفاف */
-    padding: 35px 25px;
-    border-radius: 15px;
-    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-    text-align: center;
-    width: 100%;
-    max-width: 400px;
-    box-sizing: border-box;
-    margin-bottom: 40px;
+    background-color: #ffffff; padding: 35px 25px; border-radius: 15px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2); text-align: center;
+    width: 100%; max-width: 400px; box-sizing: border-box; margin-bottom: 40px;
 }
-
-/* عنوان كوبون الخدمة المجاني - كبير وملون */
-h1#title { 
-    color: #1a237e; /* لون أزرق مختلف وعميق */
-    font-size: 36px; /* حجم أكبر */
-    margin: 0 0 10px 0; 
-    font-weight: 900;
-    line-height: 1.2;
-}
-
-/* تنسيق العنوان بالإنجليزية */
-html[dir="ltr"] h1#title {
-    font-family: 'Orbitron', sans-serif;
-    font-size: 28px;
-    letter-spacing: 1px;
-}
-
-#description { 
-    color: #444; 
-    font-size: 16px; 
-    font-weight: bold;
-    margin-bottom: 25px; 
-}
-
-form label { 
-    display: block; 
-    text-align: right; 
-    font-size: 14px; 
-    font-weight: bold; 
-    margin-top: 15px; 
-    color: #004aad; 
-}
-
-form input, form select {
-    width: 100%;
-    padding: 12px;
-    margin-top: 5px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    box-sizing: border-box;
-    font-family: 'Cairo', sans-serif;
-}
-
+h1#title { color: #1a237e; font-size: 36px; margin: 0 0 10px 0; font-weight: 900; line-height: 1.2; }
+html[dir="ltr"] h1#title { font-family: 'Orbitron', sans-serif; font-size: 28px; letter-spacing: 1px; }
+#description { color: #444; font-size: 16px; font-weight: bold; margin-bottom: 25px; }
+form label { display: block; text-align: right; font-size: 14px; font-weight: bold; margin-top: 15px; color: #004aad; }
+html[dir="ltr"] form label { text-align: left; } /* تنسيق الاتجاه للإنجليزي */
+form input, form select { width: 100%; padding: 12px; margin-top: 5px; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; font-family: 'Cairo', sans-serif; }
 .note-orange { color: #ff6600; font-size: 13px; font-weight: bold; margin-top: 20px; }
 .thanks-msg { color: #004aad; font-size: 15px; font-weight: bold; margin-bottom: 20px; }
-
-form button#submitBtn {
-    background: #ff6600;
-    color: white;
-    border: none;
-    padding: 16px;
-    width: 100%;
-    border-radius: 10px;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
-    margin-top: 10px;
-}
-
-.footer-note {
-    font-size: 13px;
-    color: #333;
-    padding-bottom: 30px;
-    text-align: center;
-}
+form button#submitBtn { background: #ff6600; color: white; border: none; padding: 16px; width: 100%; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 10px; }
+.footer-note { font-size: 13px; color: #333; padding-bottom: 30px; text-align: center; }
+</style>
