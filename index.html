@@ -2,16 +2,13 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="pageTitle">كوبون الخدمة المجاني</title>
-    <?!= include('style'); ?>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Cairo:wght@700;900&display=swap" rel="stylesheet">
+    <?!= include('style'); ?>
 </head>
 <body>
 
 <div class="main-wrapper">
     <div class="header-spacer"></div>
-
     <div class="lang-switch-container">
         <button id="toggleLang">En</button>
     </div>
@@ -32,22 +29,16 @@
         <h1 id="regTitle">تسجيل البيانات</h1>
         <form id="registrationForm">
             <input type="hidden" name="formType" value="registration">
-            
             <label id="lblBranch">فرع النهدي رقم:</label>
             <input type="number" name="branchNumber" id="branchInput" required>
-
             <label id="lblInvoice">رقم الفاتورة:</label>
             <input type="text" name="invoiceNumber" id="invoiceInput" required>
-
             <label id="lblName">الاسم:</label>
             <input type="text" name="name" id="nameInput" required>
-
             <label id="lblCarDetails">نوع وموديل السيارة:</label>
             <input type="text" name="carDetails" id="carInput" required>
-
             <label id="lblMobile">رقم الجوال:</label>
             <input type="tel" name="mobileNumber" id="mobileInput" required pattern="[0-9]{10}">
-
             <button type="submit" id="submitBtn">تقديم</button>
             <button type="button" class="back-btn" id="backBtnReg" onclick="showPage('homePage')">رجوع</button>
         </form>
@@ -57,17 +48,13 @@
         <h1 id="execTitle">تنفيذ الخدمة</h1>
         <form id="executionForm">
             <input type="hidden" name="formType" value="execution">
-            
-            <label id="lblExecBranch">الفرع المتواجد به لتنفيذ الخدمة:</label>
+            <label id="lblExecBranch">الفرع المتواجد به للتنفيذ:</label>
             <input type="text" name="execBranch" id="execBranchInput" required>
-
             <label id="lblExecInvoice">رقم الفاتورة:</label>
             <input type="text" name="execInvoice" id="execInvoiceInput" required>
-
             <button type="submit" id="execSubmitBtn">تم التنفيذ</button>
-            
             <div id="ratingSection" class="hidden">
-                <label id="lblRate" style="text-align:center">تقييم الخدمة</label>
+                <label id="lblRate">تقييم الخدمة</label>
                 <div class="stars">
                     <span data-v="5">★</span><span data-v="4">★</span><span data-v="3">★</span><span data-v="2">★</span><span data-v="1">★</span>
                 </div>
@@ -79,12 +66,10 @@
     </div>
 
     <div id="thanksSection" class="container hidden">
-        <h1 id="thanksTitle" style="color: #1a237e; font-size: 28px;">شكراً لاختياركم النهدي للإطارات</h1>
+        <h1 id="thanksTitle">شكراً لاختياركم النهدي للإطارات</h1>
         <p id="thanksSub" class="thanks-msg">نسعد بخدمتكم</p>
-        <button class="back-btn" id="homeReturn" onclick="location.reload()">العودة للرئيسية</button>
+        <button class="back-btn" onclick="location.reload()">العودة للرئيسية</button>
     </div>
-
-    <div class="footer-note" id="footerText">شركة ياسر يسلم النهدي التجارية</div>
 </div>
 
 <?!= include('script'); ?>
