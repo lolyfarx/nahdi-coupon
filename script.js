@@ -1,4 +1,5 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxkVcqLSlu3_oF7YC0MEZLYWQag6Q92UvYaGZVFaMlqbrSGYplUlOhbBFos7xA598dqCQ/exec';
+// استبدل الرابط أدناه بالرابط الجديد الذي ستحصل عليه بعد عمل Deploy للسكربت المحدث (doGet)
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzzMhFySKEyN7IfKgKxoEXF9ze32JF0Q-huuTNgRqnxb4_Q_YCfazaFvVgsAIMiQVnBMQ/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -18,6 +19,7 @@ function showPage(pageId) {
     }
 }
 
+// دالة تبديل اللغة
 document.getElementById('toggleLang').addEventListener('click', function() {
     isArabic = !isArabic;
     this.innerText = isArabic ? 'En' : 'العربية';
@@ -25,6 +27,7 @@ document.getElementById('toggleLang').addEventListener('click', function() {
     updateTranslations();
 });
 
+// دالة الترجمة الكاملة
 function updateTranslations() {
     const t = {
         ar: { 
@@ -175,6 +178,7 @@ function updateTranslations() {
     }
 }
 
+// دالة نظام النجوم
 function initStars() {
     const stars = document.querySelectorAll('.stars span');
     stars.forEach(star => {
@@ -189,7 +193,30 @@ function initStars() {
     });
 }
 
-// تعديل دالة التقديم لتعمل بكفاءة على الجوال
+// دالة الإرسال المتوافقة (تحويل البيانات لـ URL Params) لضمان الوصول
+function sendToGoogle(formElement, formType, extraData = {}) {
+    const formData = new FormData(formElement);
+    const params = new URLSearchParams();
+    
+    // إضافة بيانات الفورم
+    formData.forEach((value, key) => {
+        params.append(key, value);
+    });
+    
+    // إضافة نوع الفورم وأي بيانات إضافية
+    params.append('formType', formType);
+    for (let key in extraData) {
+        params.append(key, extraData[key]);
+    }
+
+    // الإرسال بطريقة GET لتفادي قيود المتصفحات (CORS)
+    return fetch(`${scriptURL}?${params.toString()}`, {
+        method: 'GET',
+        mode: 'no-cors'
+    });
+}
+
+// معالجة نموذج التسجيل
 const regForm = document.getElementById('registrationForm');
 if (regForm) {
     regForm.onsubmit = function(e) {
@@ -200,24 +227,19 @@ if (regForm) {
             btn.innerText = isArabic ? "...جاري الإرسال" : "Sending...";
         }
 
-        // استخدام FormData وتغيير طريقة الإرسال لضمان التوافق
-        fetch(scriptURL, { 
-            method: 'POST', 
-            mode: 'no-cors', // يحل مشاكل الحماية في متصفحات الجوال
-            body: new FormData(regForm) 
-        })
+        // إرسال بيانات التسجيل
+        sendToGoogle(regForm, 'registration', { city: document.getElementById('hiddenCity').value })
         .then(() => {
-            // في وضع no-cors ننتقل مباشرة للنجاح
-            regForm.reset(); 
+            regForm.reset();
             showPage('thanksSection');
             if (btn) {
                 btn.disabled = false;
                 btn.innerText = isArabic ? "تقديم" : "Submit";
             }
         })
-        .catch(error => {
-            console.error('Error!', error);
-            alert(isArabic ? "حدث خطأ أثناء الإرسال" : "Error while sending");
+        .catch(err => {
+            console.error(err);
+            alert(isArabic ? "حدث خطأ في الاتصال" : "Connection error");
             if (btn) {
                 btn.disabled = false;
                 btn.innerText = isArabic ? "تقديم" : "Submit";
@@ -226,17 +248,18 @@ if (regForm) {
     };
 }
 
+// معالجة نموذج التنفيذ
 const execForm = document.getElementById('executionForm');
 if (execForm) {
     execForm.onsubmit = function(e) {
         e.preventDefault();
-        const execBtn = document.getElementById('execSubmitBtn');
-        const rateSec = document.getElementById('ratingSection');
-        if (execBtn) execBtn.classList.add('hidden');
-        if (rateSec) rateSec.classList.remove('hidden');
+        // إخفاء زر التنفيذ وإظهار النجوم
+        document.getElementById('execSubmitBtn').classList.add('hidden');
+        document.getElementById('ratingSection').classList.remove('hidden');
     };
 }
 
+// دالة إنهاء التنفيذ (بعد التقييم)
 function finishProcess() {
     const execFormEl = document.getElementById('executionForm');
     const finishBtn = document.getElementById('finishBtn');
@@ -244,15 +267,9 @@ function finishProcess() {
     if (execFormEl) {
         if (finishBtn) finishBtn.disabled = true;
         
-        const formData = new FormData(execFormEl);
-        const ratingVal = document.getElementById('ratingValue');
-        formData.append('rating', ratingVal ? ratingVal.value : "0");
+        const rating = document.getElementById('ratingValue').value || "0";
         
-        fetch(scriptURL, { 
-            method: 'POST', 
-            mode: 'no-cors',
-            body: formData 
-        })
+        sendToGoogle(execFormEl, 'execution', { rating: rating })
         .then(() => {
             execFormEl.reset();
             showPage('thanksSection');
