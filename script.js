@@ -1,4 +1,4 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzlkb61GZaSVsXGKGcfhJ7EwvvpI6QSUDJwPsFxTUBBQeeBPoFetiCnFDIaN-xzb_M0/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwydyfSkMXJiNovm1VZhI11fYqJKnVTPs4AnLJd6mcEAbhiVFcAAiIsxi-iElafo4tI/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -23,22 +23,19 @@ document.getElementById('toggleLang').addEventListener('click', function() {
     updateTranslations();
 });
 
-// دالة المعالجة للتسجيل (تعمل على الجوال واللابتوب)
-window.handleRegResponse = function(response) {
+// --- 1. معالجة التسجيل ---
+window.handleResponse = function(response) {
     const btn = document.getElementById('submitBtn');
     if (response.status === "DUPLICATE") {
-        alert(isArabic ? "⚠️ عذراً، رقم الجوال أو الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, this Mobile or Invoice is already registered!");
+        alert(isArabic ? "⚠️ عذراً، رقم الجوال أو الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, Mobile or Invoice already registered!");
         btn.disabled = false;
         btn.innerText = isArabic ? "تقديم" : "Submit";
     } else {
         document.getElementById('registrationForm').reset();
         showPage('thanksSection');
-        btn.disabled = false;
-        btn.innerText = isArabic ? "تقديم" : "Submit";
     }
-    // حذف السكربت المؤقت من الصفحة
-    const oldScript = document.getElementById('api-script');
-    if (oldScript) oldScript.remove();
+    const old = document.getElementById('api-reg');
+    if(old) old.remove();
 };
 
 const regForm = document.getElementById('registrationForm');
@@ -48,25 +45,31 @@ regForm.onsubmit = function(e) {
     btn.disabled = true;
     btn.innerText = isArabic ? "...جاري التحقق" : "Checking...";
 
-    const formData = new FormData(regForm);
-    const params = new URLSearchParams(formData);
+    const params = new URLSearchParams(new FormData(regForm));
     params.append('formType', 'registration');
 
-    // الطريقة التي تحل مشكلة الجوال: إدراج سكربت مؤقت
     const script = document.createElement('script');
-    script.id = 'api-script';
+    script.id = 'api-reg';
     script.src = `${scriptURL}?${params.toString()}`;
     document.body.appendChild(script);
 };
 
-// دالة المعالجة للتنفيذ
+// --- 2. معالجة التنفيذ (مع رسالة تم التنفيذ مسبقاً) ---
 window.handleExecResponse = function(response) {
     const finishBtn = document.getElementById('finishBtn');
-    document.getElementById('executionForm').reset();
-    showPage('thanksSection');
-    finishBtn.disabled = false;
-    const oldScript = document.getElementById('exec-api-script');
-    if (oldScript) oldScript.remove();
+    if (response.status === "ALREADY_EXECUTED") {
+        alert(isArabic ? "⚠️ هذه الخدمة تم تنفيذها مسبقاً لهذه الفاتورة!" : "⚠️ This service has already been executed for this invoice!");
+        finishBtn.disabled = false;
+        finishBtn.innerText = isArabic ? "إنهاء" : "Finish";
+    } else if (response.status === "NOT_FOUND") {
+        alert(isArabic ? "⚠️ رقم الفاتورة غير موجود في السجلات!" : "⚠️ Invoice number not found!");
+        finishBtn.disabled = false;
+    } else {
+        document.getElementById('executionForm').reset();
+        showPage('thanksSection');
+    }
+    const old = document.getElementById('api-exec');
+    if(old) old.remove();
 };
 
 const execForm = document.getElementById('executionForm');
@@ -79,19 +82,19 @@ execForm.onsubmit = function(e) {
 function finishProcess() {
     const finishBtn = document.getElementById('finishBtn');
     finishBtn.disabled = true;
-    
-    const formData = new FormData(execForm);
-    const params = new URLSearchParams(formData);
+    finishBtn.innerText = isArabic ? "...جاري المعالجة" : "Processing...";
+
+    const params = new URLSearchParams(new FormData(execForm));
     params.append('formType', 'execution');
     params.append('rating', document.getElementById('ratingValue').value);
 
     const script = document.createElement('script');
-    script.id = 'exec-api-script';
+    script.id = 'api-exec';
     script.src = `${scriptURL}?${params.toString()}`;
     document.body.appendChild(script);
 }
 
-// نصوص الترجمة والنجوم (بدون تغيير)
+// --- 3. الترجمة والنجوم (بدون تغيير) ---
 function updateTranslations() {
     const t = {
         ar: { 
@@ -103,8 +106,8 @@ function updateTranslations() {
             cityTitle: "أختر مدينة أو الأقرب إليك",
             regTitle: "تسجيل البيانات", regSub: "سجل واستمتع بالكوبون!",
             lblInv: "رقم الفاتورة:", lblName: "الاسم:", lblMob: "رقم الجوال:",
-            lblCar: "نوع وموديل السيارة:", lblSer: "الخدمة المطلوبة:",
-            lblBr: "رقم فرع النهدي:", provReg: "مقدم الكوبون",
+            lblCar: "نوع وموديل السيارة:", lblService: "الخدمة المطلوبة:",
+            lblBranch: "رقم فرع النهدي:", provReg: "مقدم الكوبون",
             execTitle: "تنفيذ الخدمة", provExec: "مقدم الخدمة",
             lblRate: "تقييم الخدمة", btnDone: "تم التنفيذ",
             btnFinish: "إنهاء", btnBack: "رجوع", btnSubmit: "تقديم",
@@ -124,8 +127,8 @@ function updateTranslations() {
             cityTitle: "Choose a city or nearest one",
             regTitle: "Register Data", regSub: "Register and enjoy the coupon!",
             lblInv: "Invoice Number:", lblName: "Name:", lblMob: "Mobile Number:",
-            lblCar: "Car Type & Model:", lblSer: "Required Service:",
-            lblBr: "Al-Nahdi Branch No:", provReg: "Coupon Provider",
+            lblCar: "Car Type & Model:", lblService: "Required Service:",
+            lblBranch: "Al-Nahdi Branch No:", provReg: "Coupon Provider",
             execTitle: "Service Execution", provExec: "Service Provider",
             lblRate: "Service Rating", btnDone: "Done",
             btnFinish: "Finish", btnBack: "Back", btnSubmit: "Submit",
@@ -140,6 +143,7 @@ function updateTranslations() {
     const curr = isArabic ? t.ar : t.en;
     const safeSet = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
     const safePlaceholder = (id, text) => { const el = document.getElementById(id); if (el) el.placeholder = text; };
+    
     safeSet('mainTitle', curr.main); safeSet('subMainText', curr.subMain);
     safeSet('regBtnText', curr.regBtn); safeSet('regBtnSub', curr.regSmall);
     safeSet('execBtnText', curr.execBtn); safeSet('execBtnSub', curr.execSmall);
@@ -147,15 +151,16 @@ function updateTranslations() {
     safeSet('cityTitle', curr.cityTitle); safeSet('btnBackCity', curr.btnBack);
     safeSet('regTitle', curr.regTitle); safeSet('regSubTitle', curr.regSub);
     safeSet('lblInvoice', curr.lblInv); safeSet('lblName', curr.lblName);
-    safeSet('lblMobile', curr.lblMob); safeSet('lblCarDetails', curr.lblCar);
-    safeSet('lblService', curr.lblSer); safeSet('lblBranch', curr.lblBr);
+    safeSet('lblMobile', curr.lblMob); safeSet('lblCarDetails', curr.lblCarDetails);
+    safeSet('lblService', curr.lblService); safeSet('lblBranch', curr.lblBranch);
     safeSet('lblProviderReg', curr.provReg); safeSet('submitBtn', curr.btnSubmit);
     safeSet('btnBackReg', curr.btnBack); safeSet('execTitle', curr.execTitle);
-    safeSet('lblExecBranch', curr.lblBr); safeSet('lblProviderExec', curr.provExec);
+    safeSet('lblExecBranch', curr.lblBranch); safeSet('lblProviderExec', curr.provExec);
     safeSet('lblExecInvoice', curr.lblInv); safeSet('execSubmitBtn', curr.btnDone);
     safeSet('lblRate', curr.lblRate); safeSet('finishBtn', curr.btnFinish);
     safeSet('btnBackExec', curr.btnBack); safeSet('thanksTitle', curr.thanks);
     safeSet('thanksSub', curr.thanksSub); safeSet('btnHome', curr.btnHome);
+
     safePlaceholder('invPH', curr.phI); safePlaceholder('namePH', curr.phN);
     safePlaceholder('mobPH', curr.phM); safePlaceholder('carPH', curr.phC);
     safePlaceholder('brPH', curr.phB); safePlaceholder('brExecPH', curr.phB);
