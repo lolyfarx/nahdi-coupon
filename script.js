@@ -1,4 +1,4 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyK0szktqICC8ferVEXcwCme-G4RXW-_RTqerJcGcpPzIPdPihEKbGmmNsedFSWnRd3kw/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzfoGFSMfwHHZRNEbbd8b5h2TF3jsPshuan0SpzNKevF5W-gB-RMShNayHawXIKXV22tg/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -6,16 +6,15 @@ window.onload = () => {
     initStars();
 };
 
-// دالة الانتقال بين الصفحات - تأكد أنها تعمل بشكل مستقل
+// دالة الانتقال بين الصفحات
 function showPage(pageId) {
-    console.log("Moving to page: " + pageId); // للتأكد في المتصفح أن الضغط يعمل
     const pages = document.querySelectorAll('.container');
     pages.forEach(p => p.classList.add('hidden'));
     
     const targetPage = document.getElementById(pageId);
     if (targetPage) {
         targetPage.classList.remove('hidden');
-        window.scrollTo(0, 0); // للعودة لأعلى الصفحة عند الانتقال
+        window.scrollTo(0, 0);
     }
 }
 
@@ -190,6 +189,7 @@ function initStars() {
     });
 }
 
+// تعديل دالة التقديم لتعمل بكفاءة على الجوال
 const regForm = document.getElementById('registrationForm');
 if (regForm) {
     regForm.onsubmit = function(e) {
@@ -200,25 +200,23 @@ if (regForm) {
             btn.innerText = isArabic ? "...جاري الإرسال" : "Sending...";
         }
 
-        fetch(scriptURL, { method: 'POST', body: new FormData(this) })
-        .then(res => res.text())
-        .then(data => {
-            if(data === "DUPLICATE") {
-                alert(isArabic ? "⚠️ البيانات المدخله مسجلة مسبقاً" : "⚠️ Data already registered");
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerText = isArabic ? "تقديم" : "Submit";
-                }
-            } else {
-                regForm.reset(); // مسح الحقول بعد الإرسال
-                showPage('thanksSection');
-                if (btn) {
-                    btn.disabled = false;
-                    btn.innerText = isArabic ? "تقديم" : "Submit";
-                }
+        // استخدام FormData وتغيير طريقة الإرسال لضمان التوافق
+        fetch(scriptURL, { 
+            method: 'POST', 
+            mode: 'no-cors', // يحل مشاكل الحماية في متصفحات الجوال
+            body: new FormData(regForm) 
+        })
+        .then(() => {
+            // في وضع no-cors ننتقل مباشرة للنجاح
+            regForm.reset(); 
+            showPage('thanksSection');
+            if (btn) {
+                btn.disabled = false;
+                btn.innerText = isArabic ? "تقديم" : "Submit";
             }
         })
         .catch(error => {
+            console.error('Error!', error);
             alert(isArabic ? "حدث خطأ أثناء الإرسال" : "Error while sending");
             if (btn) {
                 btn.disabled = false;
@@ -250,9 +248,13 @@ function finishProcess() {
         const ratingVal = document.getElementById('ratingValue');
         formData.append('rating', ratingVal ? ratingVal.value : "0");
         
-        fetch(scriptURL, { method: 'POST', body: formData })
+        fetch(scriptURL, { 
+            method: 'POST', 
+            mode: 'no-cors',
+            body: formData 
+        })
         .then(() => {
-            execFormEl.reset(); // مسح حقول التنفيذ بعد الإرسال
+            execFormEl.reset();
             showPage('thanksSection');
             if (finishBtn) finishBtn.disabled = false;
         })
