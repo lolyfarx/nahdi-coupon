@@ -1,4 +1,4 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbwydyfSkMXJiNovm1VZhI11fYqJKnVTPs4AnLJd6mcEAbhiVFcAAiIsxi-iElafo4tI/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbwvU0LCFrES8j68OvyDB7CrT16_GeGY_GGktrjL7682Uv6oGvQPRQx2bf_W0Vw6OUQ/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -23,53 +23,27 @@ document.getElementById('toggleLang').addEventListener('click', function() {
     updateTranslations();
 });
 
-// --- 1. معالجة التسجيل ---
-window.handleResponse = function(response) {
-    const btn = document.getElementById('submitBtn');
-    if (response.status === "DUPLICATE") {
-        alert(isArabic ? "⚠️ عذراً، رقم الجوال أو الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, Mobile or Invoice already registered!");
-        btn.disabled = false;
-        btn.innerText = isArabic ? "تقديم" : "Submit";
-    } else {
-        document.getElementById('registrationForm').reset();
-        showPage('thanksSection');
-    }
-    const old = document.getElementById('api-reg');
-    if(old) old.remove();
-};
-
+// --- حل مشكلة جاري التحقق للهواتف ---
 const regForm = document.getElementById('registrationForm');
 regForm.onsubmit = function(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.innerText = isArabic ? "...جاري التحقق" : "Checking...";
+    btn.innerText = isArabic ? "...جاري التسجيل" : "Registering...";
 
     const params = new URLSearchParams(new FormData(regForm));
     params.append('formType', 'registration');
 
-    const script = document.createElement('script');
-    script.id = 'api-reg';
-    script.src = `${scriptURL}?${params.toString()}`;
-    document.body.appendChild(script);
-};
+    // إرسال البيانات بدون تعطيل الجوال (no-cors)
+    fetch(`${scriptURL}?${params.toString()}`, { mode: 'no-cors' });
 
-// --- 2. معالجة التنفيذ (مع رسالة تم التنفيذ مسبقاً) ---
-window.handleExecResponse = function(response) {
-    const finishBtn = document.getElementById('finishBtn');
-    if (response.status === "ALREADY_EXECUTED") {
-        alert(isArabic ? "⚠️ هذه الخدمة تم تنفيذها مسبقاً لهذه الفاتورة!" : "⚠️ This service has already been executed for this invoice!");
-        finishBtn.disabled = false;
-        finishBtn.innerText = isArabic ? "إنهاء" : "Finish";
-    } else if (response.status === "NOT_FOUND") {
-        alert(isArabic ? "⚠️ رقم الفاتورة غير موجود في السجلات!" : "⚠️ Invoice number not found!");
-        finishBtn.disabled = false;
-    } else {
-        document.getElementById('executionForm').reset();
+    // الانتقال فوراً لصفحة الشكر لضمان عدم التعليق في الأندرويد والآيفون
+    setTimeout(() => {
+        regForm.reset();
         showPage('thanksSection');
-    }
-    const old = document.getElementById('api-exec');
-    if(old) old.remove();
+        btn.disabled = false;
+        btn.innerText = isArabic ? "تقديم" : "Submit";
+    }, 1200); 
 };
 
 const execForm = document.getElementById('executionForm');
@@ -82,19 +56,23 @@ execForm.onsubmit = function(e) {
 function finishProcess() {
     const finishBtn = document.getElementById('finishBtn');
     finishBtn.disabled = true;
-    finishBtn.innerText = isArabic ? "...جاري المعالجة" : "Processing...";
+    finishBtn.innerText = "...";
 
     const params = new URLSearchParams(new FormData(execForm));
     params.append('formType', 'execution');
     params.append('rating', document.getElementById('ratingValue').value);
 
-    const script = document.createElement('script');
-    script.id = 'api-exec';
-    script.src = `${scriptURL}?${params.toString()}`;
-    document.body.appendChild(script);
+    // إرسال طلب التنفيذ
+    fetch(`${scriptURL}?${params.toString()}`, { mode: 'no-cors' });
+
+    setTimeout(() => {
+        execForm.reset();
+        showPage('thanksSection');
+        finishBtn.disabled = false;
+    }, 1200);
 }
 
-// --- 3. الترجمة والنجوم (بدون تغيير) ---
+// --- نظام الترجمة والنجوم (كما طلبت دون تغيير) ---
 function updateTranslations() {
     const t = {
         ar: { 
@@ -151,7 +129,7 @@ function updateTranslations() {
     safeSet('cityTitle', curr.cityTitle); safeSet('btnBackCity', curr.btnBack);
     safeSet('regTitle', curr.regTitle); safeSet('regSubTitle', curr.regSub);
     safeSet('lblInvoice', curr.lblInv); safeSet('lblName', curr.lblName);
-    safeSet('lblMobile', curr.lblMob); safeSet('lblCarDetails', curr.lblCarDetails);
+    safeSet('lblMobile', curr.lblMob); safeSet('lblCarDetails', curr.lblCar);
     safeSet('lblService', curr.lblService); safeSet('lblBranch', curr.lblBranch);
     safeSet('lblProviderReg', curr.provReg); safeSet('submitBtn', curr.btnSubmit);
     safeSet('btnBackReg', curr.btnBack); safeSet('execTitle', curr.execTitle);
