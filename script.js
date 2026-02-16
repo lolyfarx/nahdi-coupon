@@ -1,5 +1,5 @@
-// استبدل هذا الرابط برابط الـ Deployment الجديد الخاص بك
-const scriptURL = 'https://script.google.com/macros/s/AKfycbw3I28Vgq6JDxTGa3zIULL98n8il9A9Y9WP40EAra5M09pP3WkzR5Zb7Oxiu49HlxUh/exec';
+// ضع رابط الـ Deployment الجديد هنا
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzmdNcDixY6m5xHv6aoNoWQgQPC5WROucAofCa2mtXUVC1fD5fpsFpvyinhZRUOCHtk/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -7,7 +7,7 @@ window.onload = () => {
     initStars();
 };
 
-// --- وظائف التنقل واللغة ---
+// --- وظائف التنقل والصفحات ---
 function showPage(pageId) {
     const pages = document.querySelectorAll('.container');
     pages.forEach(p => p.classList.add('hidden'));
@@ -25,34 +25,37 @@ document.getElementById('toggleLang').addEventListener('click', function() {
     updateTranslations();
 });
 
-// --- معالج الرد من جوجل (JSONP) ---
-window.handleGoogleResponse = function(response) {
+// --- معالجة الرد (الحل النهائي للهاتف) ---
+window.handleResponse = function(response) {
     const btnReg = document.getElementById('submitBtn');
     const btnExec = document.getElementById('finishBtn');
 
     if (response.status === "DUPLICATE") {
-        alert(isArabic ? "⚠️ عذراً، رقم الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, this invoice is already registered!");
-        if(btnReg) { btnReg.disabled = false; btnReg.innerText = isArabic ? "تقديم" : "Submit"; }
+        alert(isArabic ? "⚠️ عذراً، رقم الفاتورة مسجل مسبقاً!" : "⚠️ Invoice already registered!");
     } else if (response.status === "ALREADY_EXECUTED") {
-        alert(isArabic ? "⚠️ تم تنفيذ الخدمة لهذه الفاتورة سابقاً!" : "⚠️ Service already executed for this invoice!");
-        if(btnExec) { btnExec.disabled = false; btnExec.innerText = isArabic ? "إنهاء" : "Finish"; }
+        alert(isArabic ? "⚠️ تم تنفيذ الخدمة لهذه الفاتورة سابقاً!" : "⚠️ Already executed!");
     } else if (response.status === "NOT_FOUND") {
-        alert(isArabic ? "⚠️ رقم الفاتورة غير موجود في السجلات!" : "⚠️ Invoice number not found!");
-        if(btnExec) { btnExec.disabled = false; btnExec.innerText = isArabic ? "إنهاء" : "Finish"; }
+        alert(isArabic ? "⚠️ رقم الفاتورة غير موجود!" : "⚠️ Invoice not found!");
     } else if (response.status === "SUCCESS") {
         document.getElementById('registrationForm').reset();
         document.getElementById('executionForm').reset();
         showPage('thanksSection');
     }
-    // حذف السكربت المؤقت
-    const old = document.getElementById('jsonp-script');
-    if(old) old.remove();
+    
+    // إعادة الأزرار لحالتها الأصلية
+    if(btnReg) { btnReg.disabled = false; btnReg.innerText = isArabic ? "تقديم" : "Submit"; }
+    if(btnExec) { btnExec.disabled = false; btnExec.innerText = isArabic ? "إنهاء" : "Finish"; }
+    
+    // إزالة السكربت المؤقت
+    const oldScript = document.getElementById('api-script');
+    if(oldScript) oldScript.remove();
 };
 
-function sendJsonpRequest(params) {
+function callAPI(params) {
     const script = document.createElement('script');
-    script.id = 'jsonp-script';
-    script.src = `${scriptURL}?${params.toString()}&callback=handleGoogleResponse&t=${Date.now()}`;
+    script.id = 'api-script';
+    // التعديل الذي يضمن العمل على الجوال 100%
+    script.src = `${scriptURL}?${params.toString()}&callback=handleResponse&t=${Date.now()}`;
     document.body.appendChild(script);
 }
 
@@ -66,7 +69,7 @@ regForm.onsubmit = function(e) {
 
     const params = new URLSearchParams(new FormData(regForm));
     params.append('formType', 'registration');
-    sendJsonpRequest(params);
+    callAPI(params);
 };
 
 const execForm = document.getElementById('executionForm');
@@ -79,15 +82,15 @@ execForm.onsubmit = function(e) {
 function finishProcess() {
     const btn = document.getElementById('finishBtn');
     btn.disabled = true;
-    btn.innerText = isArabic ? "...جاري المعالجة" : "Processing...";
+    btn.innerText = "...";
 
     const params = new URLSearchParams(new FormData(execForm));
     params.append('formType', 'execution');
     params.append('rating', document.getElementById('ratingValue').value);
-    sendJsonpRequest(params);
+    callAPI(params);
 }
 
-// --- نظام الترجمة الكامل ---
+// --- نظام الترجمة ---
 function updateTranslations() {
     const t = {
         ar: { 
