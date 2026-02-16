@@ -1,5 +1,5 @@
 // استبدل الرابط أدناه بالرابط الجديد الذي ستحصل عليه بعد عمل Deploy للسكربت المحدث (doGet)
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzzMhFySKEyN7IfKgKxoEXF9ze32JF0Q-huuTNgRqnxb4_Q_YCfazaFvVgsAIMiQVnBMQ/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw5XK-pilIEvsqtiiBzxh72mhb4qSoZYT16tu0FLEu6I-I47RKm_UYwF_SzQZAZwyT9/exec';
 let isArabic = true;
 
 window.onload = () => {
