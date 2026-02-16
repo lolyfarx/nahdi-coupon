@@ -1,4 +1,4 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzfoGFSMfwHHZRNEbbd8b5h2TF3jsPshuan0SpzNKevF5W-gB-RMShNayHawXIKXV22tg/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzfoGFSMfwHHZRNEbbd8b5h2TF3jsPshuan0SpzNKevF5W-gB-RMShNayHawXIKXV22tg/exechttps://script.google.com/macros/s/AKfycbw7lmRn_99DDjVah7X4UTCulsIQq7QkFODqfsPVQdQ_BdphB0TMRNmHJwFHeQjfAQgcXQ/exec';
 let isArabic = true;
 
 window.onload = () => {
