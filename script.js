@@ -100,7 +100,6 @@ function updateTranslations() {
 
     const curr = isArabic ? t.ar : t.en;
 
-    // دالة حماية: تقوم بتحديث النص فقط إذا كان العنصر موجوداً لمنع توقف السكربت
     const safeSet = (id, text) => {
         const el = document.getElementById(id);
         if (el) el.innerText = text;
@@ -196,16 +195,35 @@ if (regForm) {
     regForm.onsubmit = function(e) {
         e.preventDefault();
         const btn = document.getElementById('submitBtn');
-        if (btn) btn.disabled = true;
+        if (btn) {
+            btn.disabled = true;
+            btn.innerText = isArabic ? "...جاري الإرسال" : "Sending...";
+        }
+
         fetch(scriptURL, { method: 'POST', body: new FormData(this) })
         .then(res => res.text())
         .then(data => {
             if(data === "DUPLICATE") {
-                alert(isArabic ? "البيانات المدخله مسجلة مسبقاً" : "Data already registered");
+                alert(isArabic ? "⚠️ البيانات المدخله مسجلة مسبقاً" : "⚠️ Data already registered");
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerText = isArabic ? "تقديم" : "Submit";
+                }
             } else {
+                regForm.reset(); // مسح الحقول بعد الإرسال
                 showPage('thanksSection');
+                if (btn) {
+                    btn.disabled = false;
+                    btn.innerText = isArabic ? "تقديم" : "Submit";
+                }
             }
-            if (btn) btn.disabled = false;
+        })
+        .catch(error => {
+            alert(isArabic ? "حدث خطأ أثناء الإرسال" : "Error while sending");
+            if (btn) {
+                btn.disabled = false;
+                btn.innerText = isArabic ? "تقديم" : "Submit";
+            }
         });
     };
 }
@@ -223,11 +241,23 @@ if (execForm) {
 
 function finishProcess() {
     const execFormEl = document.getElementById('executionForm');
+    const finishBtn = document.getElementById('finishBtn');
+    
     if (execFormEl) {
+        if (finishBtn) finishBtn.disabled = true;
+        
         const formData = new FormData(execFormEl);
         const ratingVal = document.getElementById('ratingValue');
         formData.append('rating', ratingVal ? ratingVal.value : "0");
+        
         fetch(scriptURL, { method: 'POST', body: formData })
-        .then(() => showPage('thanksSection'));
+        .then(() => {
+            execFormEl.reset(); // مسح حقول التنفيذ بعد الإرسال
+            showPage('thanksSection');
+            if (finishBtn) finishBtn.disabled = false;
+        })
+        .catch(() => {
+            if (finishBtn) finishBtn.disabled = false;
+        });
     }
 }
