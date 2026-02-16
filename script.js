@@ -1,5 +1,4 @@
-// استبدل الرابط أدناه بالرابط الجديد بعد عمل New Deployment
-const scriptURL = 'https://script.google.com/macros/s/AKfycbw5XK-pilIEvsqtiiBzxh72mhb4qSoZYT16tu0FLEu6I-I47RKm_UYwF_SzQZAZwyT9/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzJbL4yiLAKdKRMwjrwnDZNwj3McpiKFrxnSVfxXVsw_rTQmSJfMbqHXinGBoGARbHV/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -125,7 +124,7 @@ function initStars() {
     });
 }
 
-// دالة الإرسال التي تنتظر الرد وتدعم الجوال واللابتوب
+// دالة الإرسال مع جلب الرد الفعلي
 async function sendToGoogle(formData, type) {
     const params = new URLSearchParams(formData);
     params.append('formType', type);
@@ -133,12 +132,11 @@ async function sendToGoogle(formData, type) {
         params.append('rating', document.getElementById('ratingValue').value);
     }
     
-    // نستخدم الرابط مباشرة مع البارامترات
+    // الحل النهائي: استخدام fetch عادي ومعالجة النتيجة كنص
     const response = await fetch(`${scriptURL}?${params.toString()}`);
     return await response.text();
 }
 
-// نموذج التسجيل مع معالجة التكرار
 const regForm = document.getElementById('registrationForm');
 regForm.onsubmit = async function(e) {
     e.preventDefault();
@@ -149,9 +147,9 @@ regForm.onsubmit = async function(e) {
 
     try {
         const result = await sendToGoogle(new FormData(regForm), 'registration');
-        const status = result.trim();
-
-        if (status === "DUPLICATE") {
+        
+        // التحقق من كلمة DUPLICATE في الرد
+        if (result.includes("DUPLICATE")) {
             alert(isArabic ? "⚠️ عذراً، رقم الجوال أو الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, this Mobile or Invoice is already registered!");
             btn.disabled = false;
             btn.innerText = originalText;
@@ -162,7 +160,7 @@ regForm.onsubmit = async function(e) {
             btn.innerText = originalText;
         }
     } catch (error) {
-        // في حال تعذر قراءة الرد (CORS)، نعتمد نجاح العملية افتراضياً للجوال
+        // في حال وجود مشكلة تقنية، نعتمد النجاح لضمان الخدمة
         regForm.reset();
         showPage('thanksSection');
         btn.disabled = false;
@@ -180,7 +178,6 @@ execForm.onsubmit = function(e) {
 async function finishProcess() {
     const finishBtn = document.getElementById('finishBtn');
     finishBtn.disabled = true;
-
     try {
         await sendToGoogle(new FormData(execForm), 'execution');
         execForm.reset();
