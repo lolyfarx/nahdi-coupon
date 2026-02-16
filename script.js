@@ -20,12 +20,16 @@ function updateTranslations() {
             subMain: "استمتع بـ 4 خدمات مجانية عند شراء 4 إطارات!",
             invNote: "يجب إحضار أصل أو صورة الفاتورة",
             reg: "التسجيل في الكوبون المجاني", 
+            regSub: "(التسجيل لأول مرة)",
+            exec: "اضغط لتنفيذ الخدمة المجانية",
+            execSub: "(عند طلب الخدمة بالفرع)",
             subTitle: "سجل واستمتع بالكوبون!", 
             cityTitle: "أختر مدينة أو الأقرب إليك", 
             note: "ملحوظة : العرض لمدة 3 شهور من تاريخ الفاتورة",
             lblB: "رقم فرع النهدي:", lblI: "رقم الفاتورة:", lblN: "الاسم:", lblC: "نوع وموديل السيارة:", lblM: "رقم الجوال:", 
             lblS: "الخدمة المطلوبة:", serDef: "اختر الخدمة", provReg: "مقدم الكوبون", provExec: "مقدم الخدمة", 
-            sub: "تقديم", back: "رجوع", thanks: "شكراً لاختياركم النهدي للإطارات", exec: "تنفيذ الخدمة",
+            sub: "تقديم", back: "رجوع", thanks: "شكراً لاختياركم النهدي للإطارات", 
+            execTitle: "تنفيذ الخدمة", thanksSub: "نسعد بخدمتكم",
             phI: "مثال: 12345", phN: "مثال: محمد علي", phM: "مثال: 05xxxxxxxx", phC: "مثال: تويوتا كامري 2026", phB: "مثال: 10",
             done: "تم التنفيذ", finish: "إنهاء", rate: "تقييم الخدمة", home: "العودة للرئيسية",
             cities: ["الرياض", "الدمام", "خميس مشيط", "وادي الدواسر", "عرعر"],
@@ -36,12 +40,16 @@ function updateTranslations() {
             subMain: "Enjoy 4 free services when buying 4 tires!",
             invNote: "Original or copy of the invoice must be brought",
             reg: "Register for Free Coupon", 
+            regSub: "(First time registration)",
+            exec: "Click to execute free service",
+            execSub: "(When requesting at the branch)",
             subTitle: "Register and enjoy the coupon!",
             cityTitle: "Choose a city or nearest one", 
             note: "Note: Offer valid for 3 months from invoice date",
             lblB: "Al-Nahdi Branch No:", lblI: "Invoice Number:", lblN: "Name:", lblC: "Car Type & Model:", lblM: "Mobile Number:", 
             lblS: "Required Service:", serDef: "Select Service", provReg: "Coupon Provider", provExec: "Service Provider", 
-            sub: "Submit", back: "Back", thanks: "Thank you for choosing Al-Nahdi", exec: "Service Execution",
+            sub: "Submit", back: "Back", thanks: "Thank you for choosing Al-Nahdi Tires", 
+            execTitle: "Service Execution", thanksSub: "We are happy to serve you",
             phI: "Ex: 12345", phN: "Ex: John Doe", phM: "Ex: 05xxxxxxxx", phC: "Ex: Toyota Camry 2026", phB: "Ex: 10",
             done: "Done", finish: "Finish", rate: "Service Rating", home: "Back to Home",
             cities: ["Riyadh", "Dammam", "Khamis Mushait", "Wadi Ad-Dawasir", "Arar"],
@@ -51,12 +59,21 @@ function updateTranslations() {
 
     const curr = isArabic ? t.ar : t.en;
 
+    // --- تحديث الواجهة الرئيسية ---
     document.getElementById('mainTitle').innerText = curr.main;
     document.getElementById('subMainText').innerText = curr.subMain;
     document.getElementById('invoiceNote').innerText = curr.invNote;
     document.getElementById('regBtnText').innerText = curr.reg;
+    document.getElementById('regBtnSub').innerText = curr.regSub;
+    document.getElementById('execBtnText').innerText = curr.exec;
+    document.getElementById('execBtnSub').innerText = curr.execSub;
     document.getElementById('promoNote').innerText = curr.note;
+
+    // --- تحديث واجهة المدن ---
     document.getElementById('cityTitle').innerText = curr.cityTitle;
+    document.getElementById('btnBackCity').innerText = curr.back;
+
+    // --- تحديث واجهة التسجيل ---
     document.getElementById('regTitle').innerText = isArabic ? 'تسجيل البيانات' : 'Register Data';
     document.getElementById('regSubTitle').innerText = curr.subTitle;
     document.getElementById('lblInvoice').innerText = curr.lblI;
@@ -66,18 +83,25 @@ function updateTranslations() {
     document.getElementById('lblService').innerText = curr.lblS;
     document.getElementById('lblBranch').innerText = curr.lblB;
     document.getElementById('lblProviderReg').innerText = curr.provReg;
-    document.getElementById('lblProviderExec').innerText = curr.provExec;
-    document.getElementById('execTitle').innerText = curr.exec;
     document.getElementById('submitBtn').innerText = curr.sub;
-    document.getElementById('thanksTitle').innerText = curr.thanks;
-    document.getElementById('execSubmitBtn').innerText = curr.done;
-    document.getElementById('finishBtn').innerText = curr.finish;
-    document.getElementById('lblRate').innerText = curr.rate;
-    document.getElementById('btnHome').innerText = curr.home;
-    document.getElementById('btnBackCity').innerText = curr.back;
     document.getElementById('btnBackReg').innerText = curr.back;
+
+    // --- تحديث واجهة التنفيذ والتقييم ---
+    document.getElementById('execTitle').innerText = curr.execTitle;
+    document.getElementById('lblExecBranch').innerText = curr.lblB;
+    document.getElementById('lblProviderExec').innerText = curr.provExec;
+    document.getElementById('lblExecInvoice').innerText = curr.lblI;
+    document.getElementById('execSubmitBtn').innerText = curr.done;
+    document.getElementById('lblRate').innerText = curr.rate;
+    document.getElementById('finishBtn').innerText = curr.finish;
     document.getElementById('btnBackExec').innerText = curr.back;
 
+    // --- تحديث واجهة الشكر ---
+    document.getElementById('thanksTitle').innerText = curr.thanks;
+    document.getElementById('thanksSub').innerText = curr.thanksSub;
+    document.getElementById('btnHome').innerText = curr.home;
+
+    // --- تحديث خانات الإدخال (Placeholders) ---
     document.getElementById('invPH').placeholder = curr.phI;
     document.getElementById('namePH').placeholder = curr.phN;
     document.getElementById('mobPH').placeholder = curr.phM;
@@ -86,6 +110,7 @@ function updateTranslations() {
     document.getElementById('brExecPH').placeholder = curr.phB;
     document.getElementById('invExecPH').placeholder = curr.phI;
 
+    // --- إعادة بناء قائمة المدن ---
     const cityList = document.getElementById('cityList');
     cityList.innerHTML = "";
     curr.cities.forEach(city => {
@@ -99,11 +124,15 @@ function updateTranslations() {
         cityList.appendChild(btn);
     });
 
+    // --- إعادة بناء قائمة الخدمات ---
     const serSel = document.getElementById('serviceSelect');
     serSel.innerHTML = `<option value="">${curr.serDef}</option>`;
-    curr.services.forEach(s => { serSel.innerHTML += `<option value="${s}">${s}</option>`; });
+    curr.services.forEach(s => { 
+        serSel.innerHTML += `<option value="${s}">${s}</option>`; 
+    });
 }
 
+// الدوال المساعدة تظل كما هي دون تغيير
 function initStars() {
     const stars = document.querySelectorAll('.stars span');
     stars.forEach(star => {
