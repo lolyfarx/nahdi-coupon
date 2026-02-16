@@ -148,6 +148,20 @@ form input, form select {
     gap: 10px;
 }
 
-.stars span { cursor: pointer; transition: color 0.2s; }
-.stars span.active { color: #ffcc00; }
-.lang-switch-container { margin: 20px 0; }
+/* تصغير جملة العرض العلوية */
+#subMainText {
+    font-size: 13px; /* حجم صغير وواضح */
+    color: #1a237e;
+    font-weight: bold;
+    margin: 10px 0 20px 0;
+}
+
+/* تصغير جمل الملحوظات السفلية */
+#promoNote, #invoiceNote {
+    font-size: 10px; /* حجم صغير جداً للنصوص الثانوية */
+    color: #cc0000;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    line-height: 1.2;
+}
