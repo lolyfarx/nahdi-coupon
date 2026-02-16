@@ -1,5 +1,4 @@
-// استبدل الرابط أدناه برابط السكربت الجديد بعد عمل New Deployment
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxV6g65Ljm5duxvFkCwdlmmaFFIt2X2RRVzW0hMNB0pGPZtdwEGlT4dhWBCmE_5Er2E/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzlkb61GZaSVsXGKGcfhJ7EwvvpI6QSUDJwPsFxTUBBQeeBPoFetiCnFDIaN-xzb_M0/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -24,6 +23,75 @@ document.getElementById('toggleLang').addEventListener('click', function() {
     updateTranslations();
 });
 
+// دالة المعالجة للتسجيل (تعمل على الجوال واللابتوب)
+window.handleRegResponse = function(response) {
+    const btn = document.getElementById('submitBtn');
+    if (response.status === "DUPLICATE") {
+        alert(isArabic ? "⚠️ عذراً، رقم الجوال أو الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, this Mobile or Invoice is already registered!");
+        btn.disabled = false;
+        btn.innerText = isArabic ? "تقديم" : "Submit";
+    } else {
+        document.getElementById('registrationForm').reset();
+        showPage('thanksSection');
+        btn.disabled = false;
+        btn.innerText = isArabic ? "تقديم" : "Submit";
+    }
+    // حذف السكربت المؤقت من الصفحة
+    const oldScript = document.getElementById('api-script');
+    if (oldScript) oldScript.remove();
+};
+
+const regForm = document.getElementById('registrationForm');
+regForm.onsubmit = function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerText = isArabic ? "...جاري التحقق" : "Checking...";
+
+    const formData = new FormData(regForm);
+    const params = new URLSearchParams(formData);
+    params.append('formType', 'registration');
+
+    // الطريقة التي تحل مشكلة الجوال: إدراج سكربت مؤقت
+    const script = document.createElement('script');
+    script.id = 'api-script';
+    script.src = `${scriptURL}?${params.toString()}`;
+    document.body.appendChild(script);
+};
+
+// دالة المعالجة للتنفيذ
+window.handleExecResponse = function(response) {
+    const finishBtn = document.getElementById('finishBtn');
+    document.getElementById('executionForm').reset();
+    showPage('thanksSection');
+    finishBtn.disabled = false;
+    const oldScript = document.getElementById('exec-api-script');
+    if (oldScript) oldScript.remove();
+};
+
+const execForm = document.getElementById('executionForm');
+execForm.onsubmit = function(e) {
+    e.preventDefault();
+    document.getElementById('execSubmitBtn').classList.add('hidden');
+    document.getElementById('ratingSection').classList.remove('hidden');
+};
+
+function finishProcess() {
+    const finishBtn = document.getElementById('finishBtn');
+    finishBtn.disabled = true;
+    
+    const formData = new FormData(execForm);
+    const params = new URLSearchParams(formData);
+    params.append('formType', 'execution');
+    params.append('rating', document.getElementById('ratingValue').value);
+
+    const script = document.createElement('script');
+    script.id = 'exec-api-script';
+    script.src = `${scriptURL}?${params.toString()}`;
+    document.body.appendChild(script);
+}
+
+// نصوص الترجمة والنجوم (بدون تغيير)
 function updateTranslations() {
     const t = {
         ar: { 
@@ -100,13 +168,11 @@ function updateTranslations() {
             const btn = document.createElement('button');
             btn.className = "city-box";
             btn.innerText = city;
-            btn.onclick = () => {
-                document.getElementById('hiddenCity').value = city;
-                showPage('regPage');
-            };
+            btn.onclick = () => { document.getElementById('hiddenCity').value = city; showPage('regPage'); };
             cityList.appendChild(btn);
         });
     }
+
     const serSel = document.getElementById('serviceSelect');
     if (serSel) {
         serSel.innerHTML = `<option value="">${curr.serDef}</option>`;
@@ -123,66 +189,4 @@ function initStars() {
             stars.forEach(s => { s.style.color = parseInt(s.dataset.v) <= val ? "#ff6600" : "#ddd"; });
         };
     });
-}
-
-// دالة الإرسال المتوافقة مع الجوال واللابتوب
-async function sendData(formData, type) {
-    const params = new URLSearchParams(formData);
-    params.append('formType', type);
-    if (type === 'execution') {
-        params.append('rating', document.getElementById('ratingValue').value);
-    }
-    // استخدام fetch المباشر هو الأسرع والأضمن حالياً
-    const response = await fetch(`${scriptURL}?${params.toString()}`);
-    return await response.text();
-}
-
-const regForm = document.getElementById('registrationForm');
-regForm.onsubmit = async function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    const originalText = btn.innerText;
-    btn.innerText = isArabic ? "...جاري التحقق" : "Checking...";
-
-    try {
-        const result = await sendData(new FormData(regForm), 'registration');
-        if (result.trim() === "DUPLICATE") {
-            alert(isArabic ? "⚠️ عذراً، رقم الجوال أو الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, Mobile or Invoice already registered!");
-            btn.disabled = false;
-            btn.innerText = originalText;
-        } else {
-            regForm.reset();
-            showPage('thanksSection');
-            btn.disabled = false;
-            btn.innerText = originalText;
-        }
-    } catch (error) {
-        // في حال حدوث أي خطأ في الشبكة، نوجه المستخدم لصفحة الشكر لضمان عدم التعليق
-        regForm.reset();
-        showPage('thanksSection');
-        btn.disabled = false;
-        btn.innerText = originalText;
-    }
-};
-
-const execForm = document.getElementById('executionForm');
-execForm.onsubmit = function(e) {
-    e.preventDefault();
-    document.getElementById('execSubmitBtn').classList.add('hidden');
-    document.getElementById('ratingSection').classList.remove('hidden');
-};
-
-async function finishProcess() {
-    const finishBtn = document.getElementById('finishBtn');
-    finishBtn.disabled = true;
-    try {
-        await sendData(new FormData(execForm), 'execution');
-        execForm.reset();
-        showPage('thanksSection');
-        finishBtn.disabled = false;
-    } catch (e) {
-        showPage('thanksSection');
-        finishBtn.disabled = false;
-    }
 }
