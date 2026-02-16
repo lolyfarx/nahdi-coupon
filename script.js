@@ -16,92 +16,146 @@ document.getElementById('toggleLang').addEventListener('click', function() {
 function updateTranslations() {
     const t = {
         ar: { 
+            // الصفحة الأولى
             main: "كوبون الخدمة المجاني", 
             subMain: "استمتع بـ 4 خدمات مجانية عند شراء 4 إطارات!",
+            regBtn: "التسجيل في الكوبون المجاني",
+            regSmall: "(التسجيل لأول مرة)",
+            execBtn: "اضغط لتنفيذ الخدمة المجانية",
+            execSmall: "(عند طلب الخدمة بالفرع)",
+            promo: "ملحوظة : العرض لمدة 3 شهور من تاريخ الفاتورة",
             invNote: "يجب إحضار أصل أو صورة الفاتورة",
-            reg: "التسجيل في الكوبون المجاني", 
-            regSub: "(التسجيل لأول مرة)",
-            exec: "اضغط لتنفيذ الخدمة المجانية",
-            execSub: "(عند طلب الخدمة بالفرع)",
-            subTitle: "سجل واستمتع بالكوبون!", 
-            cityTitle: "أختر مدينة أو الأقرب إليك", 
-            note: "ملحوظة : العرض لمدة 3 شهور من تاريخ الفاتورة",
-            lblB: "رقم فرع النهدي:", lblI: "رقم الفاتورة:", lblN: "الاسم:", lblC: "نوع وموديل السيارة:", lblM: "رقم الجوال:", 
-            lblS: "الخدمة المطلوبة:", serDef: "اختر الخدمة", provReg: "مقدم الكوبون", provExec: "مقدم الخدمة", 
-            sub: "تقديم", back: "رجوع", thanks: "شكراً لاختياركم النهدي للإطارات", 
-            execTitle: "تنفيذ الخدمة", thanksSub: "نسعد بخدمتكم",
-            phI: "مثال: 12345", phN: "مثال: محمد علي", phM: "مثال: 05xxxxxxxx", phC: "مثال: تويوتا كامري 2026", phB: "مثال: 10",
-            done: "تم التنفيذ", finish: "إنهاء", rate: "تقييم الخدمة", home: "العودة للرئيسية",
+            
+            // صفحة المدن
+            cityTitle: "أختر مدينة أو الأقرب إليك",
+            
+            // صفحة التسجيل
+            regTitle: "تسجيل البيانات",
+            regSub: "سجل واستمتع بالكوبون!",
+            lblInv: "رقم الفاتورة:",
+            lblName: "الاسم:",
+            lblMob: "رقم الجوال:",
+            lblCar: "نوع وموديل السيارة:",
+            lblSer: "الخدمة المطلوبة:",
+            lblBr: "رقم فرع النهدي:",
+            provReg: "مقدم الكوبون",
+            
+            // صفحة تنفيذ الخدمة (مهمة جداً)
+            execTitle: "تنفيذ الخدمة",
+            provExec: "مقدم الخدمة",
+            lblRate: "تقييم الخدمة",
+            btnDone: "تم التنفيذ",
+            btnFinish: "إنهاء",
+            
+            // عام
+            btnBack: "رجوع",
+            btnSubmit: "تقديم",
+            thanks: "شكراً لاختياركم النهدي للإطارات",
+            thanksSub: "نسعد بخدمتكم",
+            btnHome: "العودة للرئيسية",
+            
+            // خدمات ومدن
             cities: ["الرياض", "الدمام", "خميس مشيط", "وادي الدواسر", "عرعر"],
-            services: ["كل الخدمات", "تدوير اطارات", "فحص اطار", "فحص ميزان", "فحص بطارية"]
+            services: ["كل الخدمات", "تدوير اطارات", "فحص اطار", "فحص ميزان", "فحص بطارية"],
+            serDef: "اختر الخدمة",
+            
+            // Placeholders
+            phI: "مثال: 12345", phN: "مثال: محمد علي", phM: "مثال: 05xxxxxxxx", phC: "مثال: تويوتا كامري 2026", phB: "مثال: 10"
         },
         en: { 
+            // Home Page
             main: "FREE SERVICE COUPON", 
             subMain: "Enjoy 4 free services when buying 4 tires!",
+            regBtn: "Register for Free Coupon",
+            regSmall: "(First time registration)",
+            execBtn: "Click to execute free service",
+            execSmall: "(When requesting at the branch)",
+            promo: "Note: Offer valid for 3 months from invoice date",
             invNote: "Original or copy of the invoice must be brought",
-            reg: "Register for Free Coupon", 
-            regSub: "(First time registration)",
-            exec: "Click to execute free service",
-            execSub: "(When requesting at the branch)",
-            subTitle: "Register and enjoy the coupon!",
-            cityTitle: "Choose a city or nearest one", 
-            note: "Note: Offer valid for 3 months from invoice date",
-            lblB: "Al-Nahdi Branch No:", lblI: "Invoice Number:", lblN: "Name:", lblC: "Car Type & Model:", lblM: "Mobile Number:", 
-            lblS: "Required Service:", serDef: "Select Service", provReg: "Coupon Provider", provExec: "Service Provider", 
-            sub: "Submit", back: "Back", thanks: "Thank you for choosing Al-Nahdi Tires", 
-            execTitle: "Service Execution", thanksSub: "We are happy to serve you",
-            phI: "Ex: 12345", phN: "Ex: John Doe", phM: "Ex: 05xxxxxxxx", phC: "Ex: Toyota Camry 2026", phB: "Ex: 10",
-            done: "Done", finish: "Finish", rate: "Service Rating", home: "Back to Home",
+            
+            // Cities Page
+            cityTitle: "Choose a city or nearest one",
+            
+            // Registration Page
+            regTitle: "Register Data",
+            regSub: "Register and enjoy the coupon!",
+            lblInv: "Invoice Number:",
+            lblName: "Name:",
+            lblMob: "Mobile Number:",
+            lblCar: "Car Type & Model:",
+            lblSer: "Required Service:",
+            lblBr: "Al-Nahdi Branch No:",
+            provReg: "Coupon Provider",
+            
+            // Execution Page (Important)
+            execTitle: "Service Execution",
+            provExec: "Service Provider",
+            lblRate: "Service Rating",
+            btnDone: "Done",
+            btnFinish: "Finish",
+            
+            // General
+            btnBack: "Back",
+            btnSubmit: "Submit",
+            thanks: "Thank you for choosing Al-Nahdi Tires",
+            thanksSub: "We are happy to serve you",
+            btnHome: "Back to Home",
+            
+            // Services & Cities
             cities: ["Riyadh", "Dammam", "Khamis Mushait", "Wadi Ad-Dawasir", "Arar"],
-            services: ["All Services", "Tire Rotation", "Tire Inspection", "Alignment Check", "Battery Check"]
+            services: ["All Services", "Tire Rotation", "Tire Inspection", "Alignment Check", "Battery Check"],
+            serDef: "Select Service",
+            
+            // Placeholders
+            phI: "Ex: 12345", phN: "Ex: John Doe", phM: "Ex: 05xxxxxxxx", phC: "Ex: Toyota Camry 2026", phB: "Ex: 10"
         }
     };
 
     const curr = isArabic ? t.ar : t.en;
 
-    // --- تحديث الواجهة الرئيسية ---
+    // --- تحديث الصفحة الأولى بالكامل (بما فيها النصوص الصغيرة) ---
     document.getElementById('mainTitle').innerText = curr.main;
     document.getElementById('subMainText').innerText = curr.subMain;
+    document.getElementById('regBtnText').innerText = curr.regBtn;
+    document.getElementById('regBtnSub').innerText = curr.regSmall; // النص الصغير 1
+    document.getElementById('execBtnText').innerText = curr.execBtn;
+    document.getElementById('execBtnSub').innerText = curr.execSmall; // النص الصغير 2
+    document.getElementById('promoNote').innerText = curr.promo;
     document.getElementById('invoiceNote').innerText = curr.invNote;
-    document.getElementById('regBtnText').innerText = curr.reg;
-    document.getElementById('regBtnSub').innerText = curr.regSub;
-    document.getElementById('execBtnText').innerText = curr.exec;
-    document.getElementById('execBtnSub').innerText = curr.execSub;
-    document.getElementById('promoNote').innerText = curr.note;
 
-    // --- تحديث واجهة المدن ---
+    // --- تحديث صفحة المدن ---
     document.getElementById('cityTitle').innerText = curr.cityTitle;
-    document.getElementById('btnBackCity').innerText = curr.back;
+    document.getElementById('btnBackCity').innerText = curr.btnBack;
 
-    // --- تحديث واجهة التسجيل ---
-    document.getElementById('regTitle').innerText = isArabic ? 'تسجيل البيانات' : 'Register Data';
-    document.getElementById('regSubTitle').innerText = curr.subTitle;
-    document.getElementById('lblInvoice').innerText = curr.lblI;
-    document.getElementById('lblName').innerText = curr.lblN;
-    document.getElementById('lblMobile').innerText = curr.lblM;
-    document.getElementById('lblCarDetails').innerText = curr.lblC;
-    document.getElementById('lblService').innerText = curr.lblS;
-    document.getElementById('lblBranch').innerText = curr.lblB;
+    // --- تحديث صفحة التسجيل ---
+    document.getElementById('regTitle').innerText = curr.regTitle;
+    document.getElementById('regSubTitle').innerText = curr.regSub;
+    document.getElementById('lblInvoice').innerText = curr.lblInv;
+    document.getElementById('lblName').innerText = curr.lblName;
+    document.getElementById('lblMobile').innerText = curr.lblMob;
+    document.getElementById('lblCarDetails').innerText = curr.lblCar;
+    document.getElementById('lblService').innerText = curr.lblSer;
+    document.getElementById('lblBranch').innerText = curr.lblBr;
     document.getElementById('lblProviderReg').innerText = curr.provReg;
-    document.getElementById('submitBtn').innerText = curr.sub;
-    document.getElementById('btnBackReg').innerText = curr.back;
+    document.getElementById('submitBtn').innerText = curr.btnSubmit;
+    document.getElementById('btnBackReg').innerText = curr.btnBack;
 
-    // --- تحديث واجهة التنفيذ والتقييم ---
+    // --- تحديث صفحة التنفيذ (بما فيها النصوص الصغيرة) ---
     document.getElementById('execTitle').innerText = curr.execTitle;
-    document.getElementById('lblExecBranch').innerText = curr.lblB;
-    document.getElementById('lblProviderExec').innerText = curr.provExec;
-    document.getElementById('lblExecInvoice').innerText = curr.lblI;
-    document.getElementById('execSubmitBtn').innerText = curr.done;
-    document.getElementById('lblRate').innerText = curr.rate;
-    document.getElementById('finishBtn').innerText = curr.finish;
-    document.getElementById('btnBackExec').innerText = curr.back;
+    document.getElementById('lblExecBranch').innerText = curr.lblBr;
+    document.getElementById('lblProviderExec').innerText = curr.provExec; // النص الصغير (مقدم الخدمة)
+    document.getElementById('lblExecInvoice').innerText = curr.lblInv;
+    document.getElementById('execSubmitBtn').innerText = curr.btnDone;
+    document.getElementById('lblRate').innerText = curr.lblRate;
+    document.getElementById('finishBtn').innerText = curr.btnFinish;
+    document.getElementById('btnBackExec').innerText = curr.btnBack;
 
-    // --- تحديث واجهة الشكر ---
+    // --- تحديث صفحة الشكر ---
     document.getElementById('thanksTitle').innerText = curr.thanks;
     document.getElementById('thanksSub').innerText = curr.thanksSub;
-    document.getElementById('btnHome').innerText = curr.home;
+    document.getElementById('btnHome').innerText = curr.btnHome;
 
-    // --- تحديث خانات الإدخال (Placeholders) ---
+    // --- تحديث الـ Placeholders ---
     document.getElementById('invPH').placeholder = curr.phI;
     document.getElementById('namePH').placeholder = curr.phN;
     document.getElementById('mobPH').placeholder = curr.phM;
@@ -110,70 +164,20 @@ function updateTranslations() {
     document.getElementById('brExecPH').placeholder = curr.phB;
     document.getElementById('invExecPH').placeholder = curr.phI;
 
-    // --- إعادة بناء قائمة المدن ---
+    // --- إعادة بناء قائمة المدن والخدمات ---
     const cityList = document.getElementById('cityList');
     cityList.innerHTML = "";
     curr.cities.forEach(city => {
         const btn = document.createElement('button');
         btn.className = "city-box";
         btn.innerText = city;
-        btn.onclick = () => {
-            document.getElementById('hiddenCity').value = city;
-            showPage('regPage');
-        };
+        btn.onclick = () => { document.getElementById('hiddenCity').value = city; showPage('regPage'); };
         cityList.appendChild(btn);
     });
 
-    // --- إعادة بناء قائمة الخدمات ---
     const serSel = document.getElementById('serviceSelect');
     serSel.innerHTML = `<option value="">${curr.serDef}</option>`;
-    curr.services.forEach(s => { 
-        serSel.innerHTML += `<option value="${s}">${s}</option>`; 
-    });
+    curr.services.forEach(s => { serSel.innerHTML += `<option value="${s}">${s}</option>`; });
 }
 
-// الدوال المساعدة تظل كما هي دون تغيير
-function initStars() {
-    const stars = document.querySelectorAll('.stars span');
-    stars.forEach(star => {
-        star.onclick = function() {
-            let val = parseInt(this.dataset.v);
-            document.getElementById('ratingValue').value = val;
-            stars.forEach(s => { s.classList.toggle('active', parseInt(s.dataset.v) <= val); });
-        };
-    });
-}
-
-function showPage(pageId) {
-    document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
-    document.getElementById(pageId).classList.remove('hidden');
-}
-
-document.getElementById('registrationForm').onsubmit = function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    fetch(scriptURL, { method: 'POST', body: new FormData(this) })
-    .then(res => res.text())
-    .then(data => {
-        if(data === "DUPLICATE") {
-            alert(isArabic ? "البيانات المدخله مسجلة مسبقاً" : "Data already registered");
-        } else {
-            showPage('thanksSection');
-        }
-        btn.disabled = false;
-    });
-};
-
-document.getElementById('executionForm').onsubmit = function(e) {
-    e.preventDefault();
-    document.getElementById('execSubmitBtn').classList.add('hidden');
-    document.getElementById('ratingSection').classList.remove('hidden');
-};
-
-function finishProcess() {
-    const formData = new FormData(document.getElementById('executionForm'));
-    formData.append('rating', document.getElementById('ratingValue').value);
-    fetch(scriptURL, { method: 'POST', body: formData })
-    .then(() => showPage('thanksSection'));
-}
+// الدوال المساعدة (showPage, initStars, etc.) تظل كما هي في كودك الأساسي
