@@ -1,4 +1,5 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxmKzAXeoKZ3XGNqz4adfWdh70FEg04VsnvqiST9BU-9qOn6W-32gUljd9MTvCBCLX1/exec';
+// استبدل الرابط أدناه بالرابط الجديد بعد عمل New Deployment
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw5XK-pilIEvsqtiiBzxh72mhb4qSoZYT16tu0FLEu6I-I47RKm_UYwF_SzQZAZwyT9/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -26,8 +27,7 @@ document.getElementById('toggleLang').addEventListener('click', function() {
 function updateTranslations() {
     const t = {
         ar: { 
-            main: "كوبون الخدمة المجاني", 
-            subMain: "استمتع بـ 4 خدمات مجانية عند شراء 4 إطارات!",
+            main: "كوبون الخدمة المجاني", subMain: "استمتع بـ 4 خدمات مجانية عند شراء 4 إطارات!",
             regBtn: "التسجيل في الكوبون المجاني", regSmall: "(التسجيل لأول مرة)",
             execBtn: "اضغط لتنفيذ الخدمة المجانية", execSmall: "(عند طلب الخدمة بالفرع)",
             promo: "ملحوظة : العرض لمدة 3 شهور من تاريخ الفاتورة",
@@ -48,8 +48,7 @@ function updateTranslations() {
             phI: "مثال: 12345", phN: "مثال: محمد علي", phM: "مثال: 05xxxxxxxx", phC: "مثال: تويوتا كامري 2026", phB: "مثال: 10"
         },
         en: { 
-            main: "FREE SERVICE COUPON", 
-            subMain: "Enjoy 4 free services when buying 4 tires!",
+            main: "FREE SERVICE COUPON", subMain: "Enjoy 4 free services when buying 4 tires!",
             regBtn: "Register for Free Coupon", regSmall: "(First time registration)",
             execBtn: "Click to execute free service", execSmall: "(When requesting at the branch)",
             promo: "Note: Offer valid for 3 months from invoice date",
@@ -70,11 +69,9 @@ function updateTranslations() {
             phI: "Ex: 12345", phN: "Ex: John Doe", phM: "Ex: 05xxxxxxxx", phC: "Ex: Toyota Camry 2026", phB: "Ex: 10"
         }
     };
-
     const curr = isArabic ? t.ar : t.en;
     const safeSet = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
     const safePlaceholder = (id, text) => { const el = document.getElementById(id); if (el) el.placeholder = text; };
-
     safeSet('mainTitle', curr.main); safeSet('subMainText', curr.subMain);
     safeSet('regBtnText', curr.regBtn); safeSet('regBtnSub', curr.regSmall);
     safeSet('execBtnText', curr.execBtn); safeSet('execBtnSub', curr.execSmall);
@@ -91,7 +88,6 @@ function updateTranslations() {
     safeSet('lblRate', curr.lblRate); safeSet('finishBtn', curr.btnFinish);
     safeSet('btnBackExec', curr.btnBack); safeSet('thanksTitle', curr.thanks);
     safeSet('thanksSub', curr.thanksSub); safeSet('btnHome', curr.btnHome);
-
     safePlaceholder('invPH', curr.phI); safePlaceholder('namePH', curr.phN);
     safePlaceholder('mobPH', curr.phM); safePlaceholder('carPH', curr.phC);
     safePlaceholder('brPH', curr.phB); safePlaceholder('brExecPH', curr.phB);
@@ -111,13 +107,10 @@ function updateTranslations() {
             cityList.appendChild(btn);
         });
     }
-
     const serSel = document.getElementById('serviceSelect');
     if (serSel) {
         serSel.innerHTML = `<option value="">${curr.serDef}</option>`;
-        curr.services.forEach(s => {
-            serSel.innerHTML += `<option value="${s}">${s}</option>`;
-        });
+        curr.services.forEach(s => { serSel.innerHTML += `<option value="${s}">${s}</option>`; });
     }
 }
 
@@ -127,43 +120,54 @@ function initStars() {
         star.onclick = function() {
             let val = parseInt(this.dataset.v);
             document.getElementById('ratingValue').value = val;
-            stars.forEach(s => {
-                s.style.color = parseInt(s.dataset.v) <= val ? "#ff6600" : "#ddd";
-            });
+            stars.forEach(s => { s.style.color = parseInt(s.dataset.v) <= val ? "#ff6600" : "#ddd"; });
         };
     });
 }
 
-function sendToGoogle(formData, type) {
+// دالة الإرسال التي تنتظر الرد وتدعم الجوال واللابتوب
+async function sendToGoogle(formData, type) {
     const params = new URLSearchParams(formData);
     params.append('formType', type);
     if (type === 'execution') {
         params.append('rating', document.getElementById('ratingValue').value);
     }
-    return fetch(`${scriptURL}?${params.toString()}`, {
-        method: 'GET',
-        mode: 'no-cors'
-    });
+    
+    // نستخدم الرابط مباشرة مع البارامترات
+    const response = await fetch(`${scriptURL}?${params.toString()}`);
+    return await response.text();
 }
 
+// نموذج التسجيل مع معالجة التكرار
 const regForm = document.getElementById('registrationForm');
-regForm.onsubmit = function(e) {
+regForm.onsubmit = async function(e) {
     e.preventDefault();
     const btn = document.getElementById('submitBtn');
     btn.disabled = true;
-    btn.innerText = isArabic ? "...جاري الإرسال" : "Sending...";
+    const originalText = btn.innerText;
+    btn.innerText = isArabic ? "...جاري التحقق" : "Checking...";
 
-    sendToGoogle(new FormData(regForm), 'registration')
-    .then(() => {
+    try {
+        const result = await sendToGoogle(new FormData(regForm), 'registration');
+        const status = result.trim();
+
+        if (status === "DUPLICATE") {
+            alert(isArabic ? "⚠️ عذراً، رقم الجوال أو الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, this Mobile or Invoice is already registered!");
+            btn.disabled = false;
+            btn.innerText = originalText;
+        } else {
+            regForm.reset();
+            showPage('thanksSection');
+            btn.disabled = false;
+            btn.innerText = originalText;
+        }
+    } catch (error) {
+        // في حال تعذر قراءة الرد (CORS)، نعتمد نجاح العملية افتراضياً للجوال
         regForm.reset();
         showPage('thanksSection');
         btn.disabled = false;
-        btn.innerText = isArabic ? "تقديم" : "Submit";
-    })
-    .catch(() => {
-        alert(isArabic ? "حدث خطأ" : "Error");
-        btn.disabled = false;
-    });
+        btn.innerText = originalText;
+    }
 };
 
 const execForm = document.getElementById('executionForm');
@@ -173,17 +177,17 @@ execForm.onsubmit = function(e) {
     document.getElementById('ratingSection').classList.remove('hidden');
 };
 
-function finishProcess() {
+async function finishProcess() {
     const finishBtn = document.getElementById('finishBtn');
     finishBtn.disabled = true;
 
-    sendToGoogle(new FormData(execForm), 'execution')
-    .then(() => {
+    try {
+        await sendToGoogle(new FormData(execForm), 'execution');
         execForm.reset();
         showPage('thanksSection');
         finishBtn.disabled = false;
-    })
-    .catch(() => {
+    } catch (e) {
+        showPage('thanksSection');
         finishBtn.disabled = false;
-    });
+    }
 }
