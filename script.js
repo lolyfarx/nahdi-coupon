@@ -1,4 +1,4 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbzJbL4yiLAKdKRMwjrwnDZNwj3McpiKFrxnSVfxXVsw_rTQmSJfMbqHXinGBoGARbHV/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxTiZQCGWGeH-Bo1iv0RQV3kdfQuIIdcKYlCR6pAuin3XN05wNOdgIlPnHOX-lD-fBQ/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -6,6 +6,7 @@ window.onload = () => {
     initStars();
 };
 
+// التنقل بين الصفحات
 function showPage(pageId) {
     const pages = document.querySelectorAll('.container');
     pages.forEach(p => p.classList.add('hidden'));
@@ -16,6 +17,7 @@ function showPage(pageId) {
     }
 }
 
+// تبديل اللغة
 document.getElementById('toggleLang').addEventListener('click', function() {
     isArabic = !isArabic;
     this.innerText = isArabic ? 'En' : 'العربية';
@@ -23,6 +25,71 @@ document.getElementById('toggleLang').addEventListener('click', function() {
     updateTranslations();
 });
 
+// دالة الإرسال بتقنية JSONP (الحل النهائي للمتصفحات)
+function sendJsonp(formData, type, callbackName) {
+    const params = new URLSearchParams(formData);
+    params.append('formType', type);
+    params.append('callback', callbackName);
+    if (type === 'execution') {
+        params.append('rating', document.getElementById('ratingValue').value);
+    }
+
+    const script = document.createElement('script');
+    script.src = `${scriptURL}?${params.toString()}`;
+    document.body.appendChild(script);
+    script.onload = () => document.body.removeChild(script);
+}
+
+// نموذج التسجيل
+const regForm = document.getElementById('registrationForm');
+regForm.onsubmit = function(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    const originalText = btn.innerText;
+    btn.innerText = isArabic ? "...جاري التحقق" : "Checking...";
+
+    // دالة الاستجابة
+    window.handleRegResponse = function(response) {
+        if (response.status === "DUPLICATE") {
+            alert(isArabic ? "⚠️ عذراً، رقم الجوال أو الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, this Mobile or Invoice is already registered!");
+            btn.disabled = false;
+            btn.innerText = originalText;
+        } else {
+            regForm.reset();
+            showPage('thanksSection');
+            btn.disabled = false;
+            btn.innerText = originalText;
+        }
+        delete window.handleRegResponse;
+    };
+
+    sendJsonp(new FormData(regForm), 'registration', 'handleRegResponse');
+};
+
+// نموذج التنفيذ
+const execForm = document.getElementById('executionForm');
+execForm.onsubmit = function(e) {
+    e.preventDefault();
+    document.getElementById('execSubmitBtn').classList.add('hidden');
+    document.getElementById('ratingSection').classList.remove('hidden');
+};
+
+function finishProcess() {
+    const finishBtn = document.getElementById('finishBtn');
+    finishBtn.disabled = true;
+
+    window.handleExecRes = function(res) {
+        execForm.reset();
+        showPage('thanksSection');
+        finishBtn.disabled = false;
+        delete window.handleExecRes;
+    };
+
+    sendJsonp(new FormData(execForm), 'execution', 'handleExecRes');
+}
+
+// الترجمة والنجوم (باقي الأكواد كما هي)
 function updateTranslations() {
     const t = {
         ar: { 
@@ -71,6 +138,7 @@ function updateTranslations() {
     const curr = isArabic ? t.ar : t.en;
     const safeSet = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
     const safePlaceholder = (id, text) => { const el = document.getElementById(id); if (el) el.placeholder = text; };
+    
     safeSet('mainTitle', curr.main); safeSet('subMainText', curr.subMain);
     safeSet('regBtnText', curr.regBtn); safeSet('regBtnSub', curr.regSmall);
     safeSet('execBtnText', curr.execBtn); safeSet('execBtnSub', curr.execSmall);
@@ -87,6 +155,7 @@ function updateTranslations() {
     safeSet('lblRate', curr.lblRate); safeSet('finishBtn', curr.btnFinish);
     safeSet('btnBackExec', curr.btnBack); safeSet('thanksTitle', curr.thanks);
     safeSet('thanksSub', curr.thanksSub); safeSet('btnHome', curr.btnHome);
+
     safePlaceholder('invPH', curr.phI); safePlaceholder('namePH', curr.phN);
     safePlaceholder('mobPH', curr.phM); safePlaceholder('carPH', curr.phC);
     safePlaceholder('brPH', curr.phB); safePlaceholder('brExecPH', curr.phB);
@@ -106,10 +175,13 @@ function updateTranslations() {
             cityList.appendChild(btn);
         });
     }
+
     const serSel = document.getElementById('serviceSelect');
     if (serSel) {
         serSel.innerHTML = `<option value="">${curr.serDef}</option>`;
-        curr.services.forEach(s => { serSel.innerHTML += `<option value="${s}">${s}</option>`; });
+        curr.services.forEach(s => {
+            serSel.innerHTML += `<option value="${s}">${s}</option>`;
+        });
     }
 }
 
@@ -119,72 +191,9 @@ function initStars() {
         star.onclick = function() {
             let val = parseInt(this.dataset.v);
             document.getElementById('ratingValue').value = val;
-            stars.forEach(s => { s.style.color = parseInt(s.dataset.v) <= val ? "#ff6600" : "#ddd"; });
+            stars.forEach(s => {
+                s.style.color = parseInt(s.dataset.v) <= val ? "#ff6600" : "#ddd";
+            });
         };
     });
-}
-
-// دالة الإرسال مع جلب الرد الفعلي
-async function sendToGoogle(formData, type) {
-    const params = new URLSearchParams(formData);
-    params.append('formType', type);
-    if (type === 'execution') {
-        params.append('rating', document.getElementById('ratingValue').value);
-    }
-    
-    // الحل النهائي: استخدام fetch عادي ومعالجة النتيجة كنص
-    const response = await fetch(`${scriptURL}?${params.toString()}`);
-    return await response.text();
-}
-
-const regForm = document.getElementById('registrationForm');
-regForm.onsubmit = async function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    const originalText = btn.innerText;
-    btn.innerText = isArabic ? "...جاري التحقق" : "Checking...";
-
-    try {
-        const result = await sendToGoogle(new FormData(regForm), 'registration');
-        
-        // التحقق من كلمة DUPLICATE في الرد
-        if (result.includes("DUPLICATE")) {
-            alert(isArabic ? "⚠️ عذراً، رقم الجوال أو الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, this Mobile or Invoice is already registered!");
-            btn.disabled = false;
-            btn.innerText = originalText;
-        } else {
-            regForm.reset();
-            showPage('thanksSection');
-            btn.disabled = false;
-            btn.innerText = originalText;
-        }
-    } catch (error) {
-        // في حال وجود مشكلة تقنية، نعتمد النجاح لضمان الخدمة
-        regForm.reset();
-        showPage('thanksSection');
-        btn.disabled = false;
-        btn.innerText = originalText;
-    }
-};
-
-const execForm = document.getElementById('executionForm');
-execForm.onsubmit = function(e) {
-    e.preventDefault();
-    document.getElementById('execSubmitBtn').classList.add('hidden');
-    document.getElementById('ratingSection').classList.remove('hidden');
-};
-
-async function finishProcess() {
-    const finishBtn = document.getElementById('finishBtn');
-    finishBtn.disabled = true;
-    try {
-        await sendToGoogle(new FormData(execForm), 'execution');
-        execForm.reset();
-        showPage('thanksSection');
-        finishBtn.disabled = false;
-    } catch (e) {
-        showPage('thanksSection');
-        finishBtn.disabled = false;
-    }
 }
