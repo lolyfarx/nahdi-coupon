@@ -94,20 +94,20 @@ form input, form select {
     border-radius: 12px;
     margin-bottom: 15px;
     cursor: pointer;
-    border: 2px solid #808080;
+    border: 2px solid #ff6600;
 }
 
 .portal-box span {
     display: block;
     font-size: 20px;
     font-weight: bold;
-    color: #1a237e;
+    color: #f85306;
 }
 
 .portal-box small {
     display: block;
     font-size: 14px;
-    color: #666;
+    color: #3a02f5;
     margin-top: 5px;
 }
 

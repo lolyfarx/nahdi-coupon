@@ -6,6 +6,19 @@ window.onload = () => {
     initStars();
 };
 
+// دالة الانتقال بين الصفحات - تأكد أنها تعمل بشكل مستقل
+function showPage(pageId) {
+    console.log("Moving to page: " + pageId); // للتأكد في المتصفح أن الضغط يعمل
+    const pages = document.querySelectorAll('.container');
+    pages.forEach(p => p.classList.add('hidden'));
+    
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+        targetPage.classList.remove('hidden');
+        window.scrollTo(0, 0); // للعودة لأعلى الصفحة عند الانتقال
+    }
+}
+
 document.getElementById('toggleLang').addEventListener('click', function() {
     isArabic = !isArabic;
     this.innerText = isArabic ? 'En' : 'العربية';
@@ -87,74 +100,81 @@ function updateTranslations() {
 
     const curr = isArabic ? t.ar : t.en;
 
-    // تحديث كل عنصر والتأكد من وجوده لتجنب توقف السكربت
-    const updateText = (id, text) => { if(document.getElementById(id)) document.getElementById(id).innerText = text; };
+    // دالة حماية: تقوم بتحديث النص فقط إذا كان العنصر موجوداً لمنع توقف السكربت
+    const safeSet = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = text;
+    };
 
-    updateText('mainTitle', curr.main);
-    updateText('subMainText', curr.subMain);
-    updateText('regBtnText', curr.regBtn);
-    updateText('regBtnSub', curr.regSmall);
-    updateText('execBtnText', curr.execBtn);
-    updateText('execBtnSub', curr.execSmall);
-    updateText('promoNote', curr.promo);
-    updateText('invoiceNote', curr.invNote);
-    updateText('cityTitle', curr.cityTitle);
-    updateText('btnBackCity', curr.btnBack);
-    updateText('regTitle', curr.regTitle);
-    updateText('regSubTitle', curr.regSub);
-    updateText('lblInvoice', curr.lblInv);
-    updateText('lblName', curr.lblName);
-    updateText('lblMobile', curr.lblMob);
-    updateText('lblCarDetails', curr.lblCar);
-    updateText('lblService', curr.lblSer);
-    updateText('lblBranch', curr.lblBr);
-    updateText('lblProviderReg', curr.provReg);
-    updateText('submitBtn', curr.btnSubmit);
-    updateText('btnBackReg', curr.btnBack);
-    updateText('execTitle', curr.execTitle);
-    updateText('lblExecBranch', curr.lblBr);
-    updateText('lblProviderExec', curr.provExec);
-    updateText('lblExecInvoice', curr.lblInv);
-    updateText('execSubmitBtn', curr.btnDone);
-    updateText('lblRate', curr.lblRate);
-    updateText('finishBtn', curr.btnFinish);
-    updateText('btnBackExec', curr.btnBack);
-    updateText('thanksTitle', curr.thanks);
-    updateText('thanksSub', curr.thanksSub);
-    updateText('btnHome', curr.btnHome);
+    const safePlaceholder = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.placeholder = text;
+    };
 
-    // تحديث الـ Placeholders
-    if(document.getElementById('invPH')) document.getElementById('invPH').placeholder = curr.phI;
-    if(document.getElementById('namePH')) document.getElementById('namePH').placeholder = curr.phN;
-    if(document.getElementById('mobPH')) document.getElementById('mobPH').placeholder = curr.phM;
-    if(document.getElementById('carPH')) document.getElementById('carPH').placeholder = curr.phC;
-    if(document.getElementById('brPH')) document.getElementById('brPH').placeholder = curr.phB;
-    if(document.getElementById('brExecPH')) document.getElementById('brExecPH').placeholder = curr.phB;
-    if(document.getElementById('invExecPH')) document.getElementById('invExecPH').placeholder = curr.phI;
+    safeSet('mainTitle', curr.main);
+    safeSet('subMainText', curr.subMain);
+    safeSet('regBtnText', curr.regBtn);
+    safeSet('regBtnSub', curr.regSmall);
+    safeSet('execBtnText', curr.execBtn);
+    safeSet('execBtnSub', curr.execSmall);
+    safeSet('promoNote', curr.promo);
+    safeSet('invoiceNote', curr.invNote);
+    safeSet('cityTitle', curr.cityTitle);
+    safeSet('btnBackCity', curr.btnBack);
+    safeSet('regTitle', curr.regTitle);
+    safeSet('regSubTitle', curr.regSub);
+    safeSet('lblInvoice', curr.lblInv);
+    safeSet('lblName', curr.lblName);
+    safeSet('lblMobile', curr.lblMob);
+    safeSet('lblCarDetails', curr.lblCar);
+    safeSet('lblService', curr.lblSer);
+    safeSet('lblBranch', curr.lblBr);
+    safeSet('lblProviderReg', curr.provReg);
+    safeSet('submitBtn', curr.btnSubmit);
+    safeSet('btnBackReg', curr.btnBack);
+    safeSet('execTitle', curr.execTitle);
+    safeSet('lblExecBranch', curr.lblBr);
+    safeSet('lblProviderExec', curr.provExec);
+    safeSet('lblExecInvoice', curr.lblInv);
+    safeSet('execSubmitBtn', curr.btnDone);
+    safeSet('lblRate', curr.lblRate);
+    safeSet('finishBtn', curr.btnFinish);
+    safeSet('btnBackExec', curr.btnBack);
+    safeSet('thanksTitle', curr.thanks);
+    safeSet('thanksSub', curr.thanksSub);
+    safeSet('btnHome', curr.btnHome);
 
-    // إعادة بناء القوائم
+    safePlaceholder('invPH', curr.phI);
+    safePlaceholder('namePH', curr.phN);
+    safePlaceholder('mobPH', curr.phM);
+    safePlaceholder('carPH', curr.phC);
+    safePlaceholder('brPH', curr.phB);
+    safePlaceholder('brExecPH', curr.phB);
+    safePlaceholder('invExecPH', curr.phI);
+
     const cityList = document.getElementById('cityList');
-    if(cityList) {
+    if (cityList) {
         cityList.innerHTML = "";
         curr.cities.forEach(city => {
             const btn = document.createElement('button');
             btn.className = "city-box";
             btn.innerText = city;
-            btn.onclick = () => { document.getElementById('hiddenCity').value = city; showPage('regPage'); };
+            btn.onclick = () => {
+                const hiddenCity = document.getElementById('hiddenCity');
+                if (hiddenCity) hiddenCity.value = city;
+                showPage('regPage');
+            };
             cityList.appendChild(btn);
         });
     }
 
     const serSel = document.getElementById('serviceSelect');
-    if(serSel) {
+    if (serSel) {
         serSel.innerHTML = `<option value="">${curr.serDef}</option>`;
-        curr.services.forEach(s => { serSel.innerHTML += `<option value="${s}">${s}</option>`; });
+        curr.services.forEach(s => {
+            serSel.innerHTML += `<option value="${s}">${s}</option>`;
+        });
     }
-}
-
-function showPage(pageId) {
-    document.querySelectorAll('.container').forEach(c => c.classList.add('hidden'));
-    document.getElementById(pageId).classList.remove('hidden');
 }
 
 function initStars() {
@@ -162,33 +182,52 @@ function initStars() {
     stars.forEach(star => {
         star.onclick = function() {
             let val = parseInt(this.dataset.v);
-            document.getElementById('ratingValue').value = val;
-            stars.forEach(s => { s.classList.toggle('active', parseInt(s.dataset.v) <= val); });
+            const ratingInput = document.getElementById('ratingValue');
+            if (ratingInput) ratingInput.value = val;
+            stars.forEach(s => {
+                s.classList.toggle('active', parseInt(s.dataset.v) <= val);
+            });
         };
     });
 }
 
-document.getElementById('registrationForm').onsubmit = function(e) {
-    e.preventDefault();
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    fetch(scriptURL, { method: 'POST', body: new FormData(this) })
-    .then(res => res.text())
-    .then(data => {
-        if(data === "DUPLICATE") { alert(isArabic ? "البيانات المدخله مسجلة مسبقاً" : "Data already registered"); } 
-        else { showPage('thanksSection'); }
-        btn.disabled = false;
-    });
-};
+const regForm = document.getElementById('registrationForm');
+if (regForm) {
+    regForm.onsubmit = function(e) {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        if (btn) btn.disabled = true;
+        fetch(scriptURL, { method: 'POST', body: new FormData(this) })
+        .then(res => res.text())
+        .then(data => {
+            if(data === "DUPLICATE") {
+                alert(isArabic ? "البيانات المدخله مسجلة مسبقاً" : "Data already registered");
+            } else {
+                showPage('thanksSection');
+            }
+            if (btn) btn.disabled = false;
+        });
+    };
+}
 
-document.getElementById('executionForm').onsubmit = function(e) {
-    e.preventDefault();
-    document.getElementById('execSubmitBtn').classList.add('hidden');
-    document.getElementById('ratingSection').classList.remove('hidden');
-};
+const execForm = document.getElementById('executionForm');
+if (execForm) {
+    execForm.onsubmit = function(e) {
+        e.preventDefault();
+        const execBtn = document.getElementById('execSubmitBtn');
+        const rateSec = document.getElementById('ratingSection');
+        if (execBtn) execBtn.classList.add('hidden');
+        if (rateSec) rateSec.classList.remove('hidden');
+    };
+}
 
 function finishProcess() {
-    const formData = new FormData(document.getElementById('executionForm'));
-    formData.append('rating', document.getElementById('ratingValue').value);
-    fetch(scriptURL, { method: 'POST', body: formData }).then(() => showPage('thanksSection'));
+    const execFormEl = document.getElementById('executionForm');
+    if (execFormEl) {
+        const formData = new FormData(execFormEl);
+        const ratingVal = document.getElementById('ratingValue');
+        formData.append('rating', ratingVal ? ratingVal.value : "0");
+        fetch(scriptURL, { method: 'POST', body: formData })
+        .then(() => showPage('thanksSection'));
+    }
 }
