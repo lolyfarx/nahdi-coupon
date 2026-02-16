@@ -16,31 +16,44 @@ document.getElementById('toggleLang').addEventListener('click', function() {
 function updateTranslations() {
     const t = {
         ar: { 
-            main: "كوبون الخدمة المجاني", reg: "التسجيل في الكوبون المجاني", subTitle: "سجل واستمتع بالكوبون!", 
-            cityTitle: "أختر مدينة أو الأقرب إليك", note: "ملحوظة : العرض لمدة 3 شهور من تاريخ الفاتورة",
+            main: "كوبون الخدمة المجاني", 
+            subMain: "استمتع بـ 4 خدمات مجانية عند شراء 4 إطارات!",
+            invNote: "يجب إحضار أصل أو صورة الفاتورة",
+            reg: "التسجيل في الكوبون المجاني", 
+            subTitle: "سجل واستمتع بالكوبون!", 
+            cityTitle: "أختر مدينة أو الأقرب إليك", 
+            note: "ملحوظة : العرض لمدة 3 شهور من تاريخ الفاتورة",
             lblB: "رقم فرع النهدي:", lblI: "رقم الفاتورة:", lblN: "الاسم:", lblC: "نوع وموديل السيارة:", lblM: "رقم الجوال:", 
             lblS: "الخدمة المطلوبة:", serDef: "اختر الخدمة", provReg: "مقدم الكوبون", provExec: "مقدم الخدمة", 
             sub: "تقديم", back: "رجوع", thanks: "شكراً لاختياركم النهدي للإطارات", exec: "تنفيذ الخدمة",
             phI: "مثال: 12345", phN: "مثال: محمد علي", phM: "مثال: 05xxxxxxxx", phC: "مثال: تويوتا كامري 2026", phB: "مثال: 10",
             done: "تم التنفيذ", finish: "إنهاء", rate: "تقييم الخدمة", home: "العودة للرئيسية",
             cities: ["الرياض", "الدمام", "خميس مشيط", "وادي الدواسر", "عرعر"],
-            services: ["تدوير اطارات", "فحص اطار", "فحص ميزان", "فحص بطارية"]
+            services: ["كل الخدمات", "تدوير اطارات", "فحص اطار", "فحص ميزان", "فحص بطارية"]
         },
         en: { 
-            main: "FREE SERVICE COUPON", reg: "Register for Free Coupon", subTitle: "Register and enjoy the coupon!", 
-            cityTitle: "Choose a city or nearest one", note: "Note: Offer valid for 3 months from invoice date",
+            main: "FREE SERVICE COUPON", 
+            subMain: "Enjoy 4 free services when buying 4 tires!",
+            invNote: "Original or copy of the invoice must be brought",
+            reg: "Register for Free Coupon", 
+            subTitle: "Register and enjoy the coupon!",
+            cityTitle: "Choose a city or nearest one", 
+            note: "Note: Offer valid for 3 months from invoice date",
             lblB: "Al-Nahdi Branch No:", lblI: "Invoice Number:", lblN: "Name:", lblC: "Car Type & Model:", lblM: "Mobile Number:", 
             lblS: "Required Service:", serDef: "Select Service", provReg: "Coupon Provider", provExec: "Service Provider", 
             sub: "Submit", back: "Back", thanks: "Thank you for choosing Al-Nahdi", exec: "Service Execution",
             phI: "Ex: 12345", phN: "Ex: John Doe", phM: "Ex: 05xxxxxxxx", phC: "Ex: Toyota Camry 2026", phB: "Ex: 10",
             done: "Done", finish: "Finish", rate: "Service Rating", home: "Back to Home",
             cities: ["Riyadh", "Dammam", "Khamis Mushait", "Wadi Ad-Dawasir", "Arar"],
-            services: ["Tire Rotation", "Tire Inspection", "Alignment Check", "Battery Check"]
+            services: ["All Services", "Tire Rotation", "Tire Inspection", "Alignment Check", "Battery Check"]
         }
     };
 
     const curr = isArabic ? t.ar : t.en;
+
     document.getElementById('mainTitle').innerText = curr.main;
+    document.getElementById('subMainText').innerText = curr.subMain;
+    document.getElementById('invoiceNote').innerText = curr.invNote;
     document.getElementById('regBtnText').innerText = curr.reg;
     document.getElementById('promoNote').innerText = curr.note;
     document.getElementById('cityTitle').innerText = curr.cityTitle;

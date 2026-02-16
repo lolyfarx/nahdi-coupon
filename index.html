@@ -8,12 +8,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&family=Cairo:wght@700;900&display=swap" rel="stylesheet">
 </head>
 <body>
+
 <div class="main-wrapper">
     <div class="header-spacer"></div>
     <div class="lang-switch-container"><button id="toggleLang">En</button></div>
 
     <div id="homePage" class="container">
         <h1 id="mainTitle">كوبون الخدمة المجاني</h1>
+        <p id="subMainText" style="font-size: 16px; font-weight: bold; color: #1a237e; margin-bottom: 20px;">استمتع بـ 4 خدمات مجانية عند شراء 4 إطارات!</p>
+        
         <div class="portal-box" onclick="showPage('cityPage')">
             <span id="regBtnText">التسجيل في الكوبون المجاني</span>
             <small id="regBtnSub">(التسجيل لأول مرة)</small>
@@ -22,7 +25,9 @@
             <span id="execBtnText">اضغط لتنفيذ الخدمة المجانية</span>
             <small id="execBtnSub">(عند طلب الخدمة بالفرع)</small>
         </div>
+        
         <p id="promoNote" style="font-size: 12px; color: #cc0000; font-weight: bold; margin-top: 20px;">ملحوظة : العرض لمدة 3 شهور من تاريخ الفاتورة</p>
+        <p id="invoiceNote" style="font-size: 12px; color: #cc0000; font-weight: bold; margin-top: 5px;">يجب إحضار أصل أو صورة الفاتورة</p>
     </div>
 
     <div id="cityPage" class="container hidden">
@@ -37,18 +42,25 @@
         <form id="registrationForm">
             <input type="hidden" name="formType" value="registration">
             <input type="hidden" name="city" id="hiddenCity">
+            
             <label id="lblInvoice">رقم الفاتورة:</label>
             <input type="text" name="invoiceNumber" id="invPH" required>
+            
             <label id="lblName">الاسم:</label>
             <input type="text" name="name" id="namePH" required>
+            
             <label id="lblMobile">رقم الجوال:</label>
             <input type="tel" name="mobileNumber" id="mobPH" required pattern="[0-9]{10}">
+            
             <label id="lblCarDetails">نوع وموديل السيارة:</label>
             <input type="text" name="carDetails" id="carPH" required>
+            
             <label id="lblService">الخدمة المطلوبة:</label>
             <select name="service" id="serviceSelect" required></select>
+            
             <label><span id="lblBranch">رقم فرع النهدي:</span> <span class="provider-text" id="lblProviderReg">مقدم الكوبون</span></label>
             <input type="number" name="branchNumber" id="brPH" required>
+            
             <button type="submit" id="submitBtn">تقديم</button>
             <button type="button" class="back-btn" id="btnBackReg" onclick="showPage('cityPage')">رجوع</button>
         </form>
@@ -62,7 +74,9 @@
             <input type="number" name="execBranch" id="brExecPH" required>
             <label id="lblExecInvoice">رقم الفاتورة:</label>
             <input type="text" name="execInvoice" id="invExecPH" required>
+            
             <button type="submit" id="execSubmitBtn">تم التنفيذ</button>
+            
             <div id="ratingSection" class="hidden">
                 <label id="lblRate">تقييم الخدمة</label>
                 <div class="stars" id="starContainer">

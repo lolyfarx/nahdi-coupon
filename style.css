@@ -47,7 +47,6 @@ h1 {
     font-weight: bold;
     color: #1a237e;
     margin-bottom: 20px;
-    white-space: nowrap;
 }
 
 .city-box {
@@ -89,24 +88,26 @@ form input, form select {
 }
 
 .portal-box {
-    background-color: #ff6600;
-    color: white;
+    background-color: #f9f9f9;
+    color: #333; 
     padding: 25px;
     border-radius: 12px;
     margin-bottom: 15px;
     cursor: pointer;
+    border: 2px solid #808080;
 }
 
 .portal-box span {
     display: block;
     font-size: 20px;
     font-weight: bold;
+    color: #1a237e;
 }
 
 .portal-box small {
     display: block;
     font-size: 14px;
-    color: #000000;
+    color: #666;
     margin-top: 5px;
 }
 
@@ -116,15 +117,14 @@ form input, form select {
     font-weight: normal;
 }
 
-/* تصغير الأزرار قليلاً مع الحفاظ على اللون البرتقالي */
 #submitBtn, #execSubmitBtn, #finishBtn, .back-btn, .lang-switch-container button {
     background-color: #ff6600;
     color: white;
     border: none;
-    padding: 12px; /* تم التصغير من 16 */
+    padding: 12px;
     width: 100%;
     border-radius: 10px;
-    font-size: 18px; /* تم التصغير من 20 */
+    font-size: 18px;
     font-weight: bold;
     cursor: pointer;
     margin-top: 15px;
