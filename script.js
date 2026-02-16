@@ -1,5 +1,5 @@
-// ضع رابط الـ Deployment الخاص بك هنا
-const scriptURL = 'https://script.google.com/macros/s/AKfycbw8WvJ0JerMWXafsB_VkPVw9nQL9bQpuqtIoQErJ7xpBGIxE2Kme-ON3BsmRUO10pFW/exec';
+// استبدل هذا الرابط برابط الـ Deployment الجديد الخاص بك
+const scriptURL = 'https://script.google.com/macros/s/AKfycbw3I28Vgq6JDxTGa3zIULL98n8il9A9Y9WP40EAra5M09pP3WkzR5Zb7Oxiu49HlxUh/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -7,7 +7,7 @@ window.onload = () => {
     initStars();
 };
 
-// --- وظائف التنقل ---
+// --- وظائف التنقل واللغة ---
 function showPage(pageId) {
     const pages = document.querySelectorAll('.container');
     pages.forEach(p => p.classList.add('hidden'));
@@ -25,48 +25,38 @@ document.getElementById('toggleLang').addEventListener('click', function() {
     updateTranslations();
 });
 
-// --- معالجة الردود من جوجل (JSONP Callback) ---
-// هذه الدالة هي التي تستقبل النتيجة وتظهر التنبيهات دون تعليق الجوال
+// --- معالج الرد من جوجل (JSONP) ---
 window.handleGoogleResponse = function(response) {
     const btnReg = document.getElementById('submitBtn');
     const btnExec = document.getElementById('finishBtn');
 
     if (response.status === "DUPLICATE") {
-        alert(isArabic ? "⚠️ عذراً، رقم الجوال أو الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, Mobile or Invoice already registered!");
-        if(btnReg) { 
-            btnReg.disabled = false; 
-            btnReg.innerText = isArabic ? "تقديم" : "Submit"; 
-        }
+        alert(isArabic ? "⚠️ عذراً، رقم الفاتورة مسجل مسبقاً!" : "⚠️ Sorry, this invoice is already registered!");
+        if(btnReg) { btnReg.disabled = false; btnReg.innerText = isArabic ? "تقديم" : "Submit"; }
     } else if (response.status === "ALREADY_EXECUTED") {
-        alert(isArabic ? "⚠️ هذه الخدمة تم تنفيذها مسبقاً لهذه الفاتورة!" : "⚠️ This service has already been executed!");
-        if(btnExec) { 
-            btnExec.disabled = false; 
-            btnExec.innerText = isArabic ? "إنهاء" : "Finish"; 
-        }
+        alert(isArabic ? "⚠️ تم تنفيذ الخدمة لهذه الفاتورة سابقاً!" : "⚠️ Service already executed for this invoice!");
+        if(btnExec) { btnExec.disabled = false; btnExec.innerText = isArabic ? "إنهاء" : "Finish"; }
     } else if (response.status === "NOT_FOUND") {
         alert(isArabic ? "⚠️ رقم الفاتورة غير موجود في السجلات!" : "⚠️ Invoice number not found!");
-        if(btnExec) btnExec.disabled = false;
+        if(btnExec) { btnExec.disabled = false; btnExec.innerText = isArabic ? "إنهاء" : "Finish"; }
     } else if (response.status === "SUCCESS") {
         document.getElementById('registrationForm').reset();
         document.getElementById('executionForm').reset();
         showPage('thanksSection');
     }
-
-    // حذف السكربت المؤقت لتنظيف المتصفح
-    const oldScript = document.getElementById('jsonp-script');
-    if(oldScript) oldScript.remove();
+    // حذف السكربت المؤقت
+    const old = document.getElementById('jsonp-script');
+    if(old) old.remove();
 };
 
-// دالة إرسال الطلب بطريقة JSONP (الحل السحري للجوال)
 function sendJsonpRequest(params) {
     const script = document.createElement('script');
     script.id = 'jsonp-script';
-    // نرسل اسم الدالة handleGoogleResponse لكي يناديها جوجل عند الانتهاء
     script.src = `${scriptURL}?${params.toString()}&callback=handleGoogleResponse&t=${Date.now()}`;
     document.body.appendChild(script);
 }
 
-// --- معالجة نموذج التسجيل ---
+// --- معالجة النماذج ---
 const regForm = document.getElementById('registrationForm');
 regForm.onsubmit = function(e) {
     e.preventDefault();
@@ -76,11 +66,9 @@ regForm.onsubmit = function(e) {
 
     const params = new URLSearchParams(new FormData(regForm));
     params.append('formType', 'registration');
-    
     sendJsonpRequest(params);
 };
 
-// --- معالجة نموذج التنفيذ ---
 const execForm = document.getElementById('executionForm');
 execForm.onsubmit = function(e) {
     e.preventDefault();
@@ -89,18 +77,17 @@ execForm.onsubmit = function(e) {
 };
 
 function finishProcess() {
-    const finishBtn = document.getElementById('finishBtn');
-    finishBtn.disabled = true;
-    finishBtn.innerText = isArabic ? "...جاري المعالجة" : "Processing...";
+    const btn = document.getElementById('finishBtn');
+    btn.disabled = true;
+    btn.innerText = isArabic ? "...جاري المعالجة" : "Processing...";
 
     const params = new URLSearchParams(new FormData(execForm));
     params.append('formType', 'execution');
     params.append('rating', document.getElementById('ratingValue').value);
-
     sendJsonpRequest(params);
 }
 
-// --- نظام الترجمة الكامل (بدون أي نقص) ---
+// --- نظام الترجمة الكامل ---
 function updateTranslations() {
     const t = {
         ar: { 
@@ -147,8 +134,6 @@ function updateTranslations() {
         }
     };
     const curr = isArabic ? t.ar : t.en;
-    
-    // تحديث النصوص
     const safeSet = (id, text) => { const el = document.getElementById(id); if (el) el.innerText = text; };
     const safePlaceholder = (id, text) => { const el = document.getElementById(id); if (el) el.placeholder = text; };
     
@@ -169,13 +154,11 @@ function updateTranslations() {
     safeSet('btnBackExec', curr.btnBack); safeSet('thanksTitle', curr.thanks);
     safeSet('thanksSub', curr.thanksSub); safeSet('btnHome', curr.btnHome);
 
-    // تحديث الـ Placeholders
     safePlaceholder('invPH', curr.phI); safePlaceholder('namePH', curr.phN);
     safePlaceholder('mobPH', curr.phM); safePlaceholder('carPH', curr.phC);
     safePlaceholder('brPH', curr.phB); safePlaceholder('brExecPH', curr.phB);
     safePlaceholder('invExecPH', curr.phI);
 
-    // تحديث قائمة المدن
     const cityList = document.getElementById('cityList');
     if (cityList) {
         cityList.innerHTML = "";
@@ -188,7 +171,6 @@ function updateTranslations() {
         });
     }
 
-    // تحديث قائمة الخدمات
     const serSel = document.getElementById('serviceSelect');
     if (serSel) {
         serSel.innerHTML = `<option value="">${curr.serDef}</option>`;
@@ -203,9 +185,7 @@ function initStars() {
         star.onclick = function() {
             let val = parseInt(this.dataset.v);
             document.getElementById('ratingValue').value = val;
-            stars.forEach(s => {
-                s.style.color = parseInt(s.dataset.v) <= val ? "#ff6600" : "#ddd";
-            });
+            stars.forEach(s => { s.style.color = parseInt(s.dataset.v) <= val ? "#ff6600" : "#ddd"; });
         };
     });
 }
