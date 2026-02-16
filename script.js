@@ -1,4 +1,4 @@
-const scriptURL = 'https://script.google.com/macros/s/AKfycbxwHj9W5v9AAoApRcKJxhdTbh8ia8s5fTFnT5eMazp25i9tFiF799I87lSB7IAVFSmu/exec';
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxmKzAXeoKZ3XGNqz4adfWdh70FEg04VsnvqiST9BU-9qOn6W-32gUljd9MTvCBCLX1/exec';
 let isArabic = true;
 
 window.onload = () => {
@@ -6,11 +6,9 @@ window.onload = () => {
     initStars();
 };
 
-// التنقل بين الصفحات
 function showPage(pageId) {
     const pages = document.querySelectorAll('.container');
     pages.forEach(p => p.classList.add('hidden'));
-    
     const targetPage = document.getElementById(pageId);
     if (targetPage) {
         targetPage.classList.remove('hidden');
@@ -18,7 +16,6 @@ function showPage(pageId) {
     }
 }
 
-// تبديل اللغة
 document.getElementById('toggleLang').addEventListener('click', function() {
     isArabic = !isArabic;
     this.innerText = isArabic ? 'En' : 'العربية';
@@ -26,7 +23,6 @@ document.getElementById('toggleLang').addEventListener('click', function() {
     updateTranslations();
 });
 
-// الترجمة الكاملة (مطابقة لملف HTML الخاص بك)
 function updateTranslations() {
     const t = {
         ar: { 
@@ -125,7 +121,6 @@ function updateTranslations() {
     }
 }
 
-// نظام النجوم
 function initStars() {
     const stars = document.querySelectorAll('.stars span');
     stars.forEach(star => {
@@ -139,23 +134,18 @@ function initStars() {
     });
 }
 
-// دالة الإرسال لضمان التوافق مع الجوال (تستخدم طريقة GET)
-function sendData(formData, type) {
+function sendToGoogle(formData, type) {
     const params = new URLSearchParams(formData);
     params.append('formType', type);
-    
-    // في حالة التنفيذ نضيف التقييم يدوياً
     if (type === 'execution') {
         params.append('rating', document.getElementById('ratingValue').value);
     }
-
     return fetch(`${scriptURL}?${params.toString()}`, {
         method: 'GET',
         mode: 'no-cors'
     });
 }
 
-// نموذج التسجيل
 const regForm = document.getElementById('registrationForm');
 regForm.onsubmit = function(e) {
     e.preventDefault();
@@ -163,7 +153,7 @@ regForm.onsubmit = function(e) {
     btn.disabled = true;
     btn.innerText = isArabic ? "...جاري الإرسال" : "Sending...";
 
-    sendData(new FormData(regForm), 'registration')
+    sendToGoogle(new FormData(regForm), 'registration')
     .then(() => {
         regForm.reset();
         showPage('thanksSection');
@@ -176,7 +166,6 @@ regForm.onsubmit = function(e) {
     });
 };
 
-// نموذج التنفيذ
 const execForm = document.getElementById('executionForm');
 execForm.onsubmit = function(e) {
     e.preventDefault();
@@ -184,12 +173,11 @@ execForm.onsubmit = function(e) {
     document.getElementById('ratingSection').classList.remove('hidden');
 };
 
-// إنهاء عملية التنفيذ
 function finishProcess() {
     const finishBtn = document.getElementById('finishBtn');
     finishBtn.disabled = true;
 
-    sendData(new FormData(execForm), 'execution')
+    sendToGoogle(new FormData(execForm), 'execution')
     .then(() => {
         execForm.reset();
         showPage('thanksSection');
